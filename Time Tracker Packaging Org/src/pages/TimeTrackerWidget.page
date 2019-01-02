@@ -1,0 +1,179 @@
+<apex:page controller="TimeTrackerController" standardStylesheets="false" showHeader="false" title="Time Tracker Widget">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/jquery.min.js')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.TimeTracker, 'bootstrap/css/bootstrap.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.TimeTracker, 'css/bootstrap-datetimepicker.min.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.TimeTracker, 'select/select2.min.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.TimeTracker, 'css/tt-style.css')}" />
+        
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'bootstrap/js/bootstrap.min.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/bootstrap-datetimepicker.min.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'select/select2.min.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/spin.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/typeahead.bundle.min.js')}" />
+        
+        <script>
+            sforce.console.setCustomConsoleComponentButtonIconUrl("{!URLFOR($Resource.TimeTracker, 'images/comity_tt_128_white.png')}");
+            window.$Label = window.$Label || {};
+            $Label.ERR_Save_TimeTracker_Message = '{!JSENCODE($Label.timetracker__err_save_timetracker_message)}';
+            $Label.ERR_Save_TimeTracker_Title = '{!JSENCODE($Label.timetracker__err_save_timetracker_title)}';
+        </script>
+
+        <!-- Console Tracking and Communication with the Extension -->
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/integration.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/lodash.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/widget.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/console/navigation.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/console/chat.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/console/secondary.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/console/primary.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/console/index.js')}" />
+
+        
+    </head>
+    
+    <body>
+        <apex:form id="tseForm">
+            <div class="container">
+                <div id="errormessage"
+                    class="floating_alert alert alert-danger hidden">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <apex:outputText value="{!$Label.timetracker__err_cannot_create_timesheet}"
+                        escape="false" />
+                </div>
+                <div id="successmessage"
+                    class="floating_alert alert alert-success hidden">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <apex:outputText value="{!$Label.timetracker__success_successfully_saved_tt_record}"
+                        escape="false" />
+                </div>
+                <div id="lockedTimesheet"
+                    class="floating_alert alert alert-danger hidden">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <apex:outputText value="{!$Label.timetracker__err_approved_timesheet}"
+                        escape="false" />
+                </div>
+                <div class="panel no-border no-shadow p-sm">
+                    <div class="text-center">
+                        <h3 class="m-top-sm">{!$Label.LBL_Time_Tracker}</h3>
+                    </div>
+                    <div id="start" class="row text-center">
+                        <table class="tbl text-center">
+                            <tr>
+                                <td>
+                                    <button type="button"
+                                        class="btn btn-success btn-start btn-circle btn-lg">
+                                        <i class="glyphicon glyphicon-play top-0"></i>
+                                    </button> <br /> <label class="f-w-400">{!$Label.LBL_TT_Widget_Start}</label>
+                                </td>
+                                <td>
+                                    <button type="button"
+                                        class="btn btn-warning btn-pause btn-circle btn-lg"
+                                        disabled="true">
+                                        <i class="glyphicon glyphicon-pause top-0"></i>
+                                    </button> <br /> <label class="f-w-400">{!$Label.LBL_TT_Widget_Pause}</label>
+                                </td>
+                                <td>
+                                    <button type="button"
+                                        class="btn btn-danger btn-stop btn-circle btn-lg"
+                                        disabled="true">
+                                        <i class="glyphicon glyphicon-stop top-0 right-1"></i>
+                                    </button> <br /> <label class="f-w-400">{!$Label.LBL_TT_Widget_Stop}</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="row s-top-buffer">
+                        <div class="col-xs-6">
+                            <label class="f-w-sb">{!$Label.LBL_Duration}<span
+                                style="color: #FF0000;">*</span></label>
+                            <div>
+                                <input id="timer" data-count="0" type="text"
+                                    class="form-control" placeholder="hh:mm:ss"
+                                    aria-describedby="basic-addon1" value="00:00:00"
+                                    data-toggle="popover" data-trigger="manual"
+                                    data-placement="bottom"
+                                    data-content="{!$Label.ERR_Invalid_duration}" />
+                            </div>
+                            <input type="hidden" id="hiddentimer" value="" />
+                        </div>
+                        <div class="col-xs-6">
+                            <label class="f-w-sb">{!$Label.LBL_Activity}<span
+                                style="color: #FF0000;">*</span></label> <select id="activitytype"
+                                class="form-control" placeholder="Activity">
+                            </select>
+                            <div id="activitytypepop" data-toggle="popover"
+                                data-trigger="manual" data-placement="bottom"
+                                data-content="{!$Label.ERR_Activity_Required}"></div>
+                        </div>
+                        <div id="activitytypepopmissingcs" data-toggle="popover"
+                            data-trigger="manual" data-placement="top"
+                            data-content="{!$Label.ERR_Missing_Custom_Settings}"></div>
+                    </div>
+                    <div class="row m-top-buffer">
+                        <div class="col-xs-9">
+                            <label class="f-w-sb">{!$Label.LBL_Activity_Date}<span
+                                style="color: #FF0000;">*</span></label>
+                            <div id="datepicker" class="input-group date">
+                                <input id="activitydate" class="form-control" type="text"
+                                    placeholder="mm/dd/yyyy hh:mm p" data-toggle="popover"
+                                    data-trigger="manual" data-placement="bottom"
+                                    data-content="{!$Label.ERR_Invalid_Activity_Date}" /> <span
+                                    class="input-group-addon" id="activitydateicon"><i
+                                    class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-top-buffer">
+                        <div id="searchsobject" class="col-xs-12">
+                            <label class="f-w-sb"> <span id="sobjectfieldname">Case</span>
+                                <span id="sobjectmandatory"
+                                style="color: #FF0000; display: none;">*</span>
+                            </label>
+                            <c:TimeTrackerTypeAheadComp searchBoxId="sobjectfield"
+                                destinationForSelectedId="sobjectrecordid"
+                                styleClass="form-control" />
+                            <input type="hidden" id="sobjectrecordid" value="" />
+                            <div id="requiredsobjectfieldpop" data-toggle="popover"
+                                data-trigger="manual" data-placement="bottom"
+                                data-content="{!$Label.ERR_SObject_Required}"></div>
+                            <div id="invalidsobjectfieldpop" data-toggle="popover"
+                                data-trigger="manual" data-placement="bottom"
+                                data-content="Value Not Found"></div>
+                            <div>
+                                <a id="autofillsobject" href="#">{!$Label.LBL_Get_from_Active_Tab}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row s-top-buffer">
+                        <div class="col-xs-12">
+                            <label class="f-w-sb">{!$Label.LBL_Comment}<span
+                                id="commentmandatory" style="color: #FF0000; display: none;">*</span></label>
+                            <textarea class="form-control" rows="3" id="comment"
+                                placeholder="Enter Comment" ></textarea>
+                            <div id="commentrequired" data-toggle="popover"
+                                data-trigger="manual" data-placement="bottom"
+                                data-content="{!$Label.ERR_Comment_Required}"></div>
+                            <div id="invalidcomment" data-toggle="popover"
+                                data-trigger="manual" data-placement="bottom"
+                                data-content="{!$Label.ERR_Invalid_comment}"></div>
+                        </div>
+                    </div>
+                    <div class="s-top-buffer text-center m-bottom-xs">
+                        <button type="button" class="btn btn-primary" id="submitBtn">{!$Label.LBL_Submit}</button>
+                    </div>
+                </div>
+            </div>
+        </apex:form>
+        
+    </body>
+    
+    <apex:iframe id="VFSessionDummy" src="/apex/VFSessionDummy" width="0px" height="0px" />
+    
+</apex:page>

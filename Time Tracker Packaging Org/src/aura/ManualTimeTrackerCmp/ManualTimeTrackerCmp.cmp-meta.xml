@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>43.0</apiVersion>
+    <description>1. LAUNCHES FROM A FOOTER COMPONENT IN LIGHTNING CONSOLE APP
+
+2. PROVIDES SCREEN TO TRACK THE TIME MANUALLY</description>
+</AuraDefinitionBundle>

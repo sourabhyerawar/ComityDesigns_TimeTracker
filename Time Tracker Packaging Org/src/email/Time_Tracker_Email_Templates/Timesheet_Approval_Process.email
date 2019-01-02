@@ -1,0 +1,3 @@
+{!Approval_Requesting_User.Name} has submitted a timesheet for your approval. Please reply to this email with "Yes" or "No" or go to this link to review the request.
+
+{!ApprovalRequest.External_URL}

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Time Tracker</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Time Trackers</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account Name --></label>
+        <name>Account_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Time Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Action Category --></label>
+        <name>Action_Category__c</name>
+        <picklistValues>
+            <masterLabel>Case Work</masterLabel>
+            <translation><!-- Case Work --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Housekeeping</masterLabel>
+            <translation><!-- Housekeeping --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Case Work</masterLabel>
+            <translation><!-- Non-Case Work --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Action Closed --></label>
+        <name>Action_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Action --></label>
+        <name>Action__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Date --></label>
+        <name>Activity_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Time --></label>
+        <name>Activity_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approved --></label>
+        <name>Approved__c</name>
+    </fields>
+    <fields>
+        <label><!-- ArticleId --></label>
+        <name>ArticleId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Article Number --></label>
+        <name>Article_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Time Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Closing Activity Time --></label>
+        <name>Closing_Activity_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comment --></label>
+        <name>Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- Time Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Deleted by Process --></label>
+        <name>Deleted_by_Process__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Id --></label>
+        <name>DocumentId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration (Hours) --></label>
+        <name>Duration2_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration (Minutes) --></label>
+        <name>Duration2_Minutes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration (Seconds) --></label>
+        <name>Duration2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Duration Variance (in Hours) --></label>
+        <name>Duration_Variance__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tracked Duration --></label>
+        <name>Duration__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hourly Quarter (EST) --></label>
+        <name>Hourly_Quarter_EST__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsBillable --></label>
+        <name>IsBillable__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsCancel --></label>
+        <name>IsCancel__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsUtilized --></label>
+        <name>IsUtilized__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lead --></label>
+        <name>Lead__c</name>
+        <relationshipLabel><!-- Time Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Manual Line Items --></label>
+        <name>MLI__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Record Document Id --></label>
+        <name>New_Record_Document_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- New Record URL --></label>
+        <name>New_Record_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Non-Reportable --></label>
+        <name>Non_Reportable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Weeks Ago --></label>
+        <name>Number_of_Weeks_Ago__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Id --></label>
+        <name>Object_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Object Name --></label>
+        <name>Object_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opening Action --></label>
+        <name>Opening_Action__c</name>
+        <picklistValues>
+            <masterLabel>Case Comment Review</masterLabel>
+            <translation><!-- Case Comment Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change Status</masterLabel>
+            <translation><!-- Change Status --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Community</masterLabel>
+            <translation><!-- Community --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delete</masterLabel>
+            <translation><!-- Delete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Edit</masterLabel>
+            <translation><!-- Edit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Escalate to L3</masterLabel>
+            <translation><!-- Escalate to L3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>File</masterLabel>
+            <translation><!-- File --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>File Upload</masterLabel>
+            <translation><!-- File Upload --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Log a Call</masterLabel>
+            <translation><!-- Log a Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Event</masterLabel>
+            <translation><!-- New Event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Post Case Comment</masterLabel>
+            <translation><!-- Post Case Comment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Start Chat</masterLabel>
+            <translation><!-- Start Chat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Update Case</masterLabel>
+            <translation><!-- Update Case --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Opening Activity Date --></label>
+        <name>Opening_Activity_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opening Activity Time --></label>
+        <name>Opening_Activity_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Opportunity --></label>
+        <name>Opportunity__c</name>
+        <relationshipLabel><!-- Time Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Parent Object Id --></label>
+        <name>Parent_Object_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Object Name --></label>
+        <name>Parent_Object_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Source --></label>
+        <name>Source__c</name>
+        <picklistValues>
+            <masterLabel>Console Toolkit</masterLabel>
+            <translation><!-- Console Toolkit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Extension</masterLabel>
+            <translation><!-- Extension --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual</masterLabel>
+            <translation><!-- Manual --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Tab Info --></label>
+        <name>TabInfo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Spent (HH:MM:SS) --></label>
+        <name>Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Tracker Dump --></label>
+        <name>Time_Tracker_Dump__c</name>
+    </fields>
+    <fields>
+        <label><!-- Timesheet Entry --></label>
+        <name>Timesheet_Entry__c</name>
+        <relationshipLabel><!-- Time Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Timesheet --></label>
+        <name>Timesheet__c</name>
+        <relationshipLabel><!-- Time Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Timestamp Details --></label>
+        <name>Timestamp_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tracked Duration (Hours) --></label>
+        <name>Tracked_Duration_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Time Trackers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- isClosedByCancelAction --></label>
+        <name>isClosedByCancelAction__c</name>
+    </fields>
+    <fields>
+        <label><!-- is Processed --></label>
+        <name>is_Processed__c</name>
+    </fields>
+    <layouts>
+        <layout>Time Tracker Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Time should be entered in HH:MM:SS format. Valid values are HH (00 to 24), MM (00 to 59) and SS (00 to 59). For example: 01:29:38 --></errorMessage>
+        <name>HHMMSS_Time_Spent_Format</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Activity Date cannot be changed for automatically captured time --></errorMessage>
+        <name>Only_Manual_record_can_be_edited</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Comment field is mandatory if Activity is General-Other --></errorMessage>
+        <name>Required_Field_If_Activity_General_Other</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Timesheet of the week of Activity Date is approved or under approval process. No new time can be entered for the timesheet. --></errorMessage>
+        <name>Stop_Editing_of_approved_record</name>
+    </validationRules>
+</CustomObjectTranslation>
