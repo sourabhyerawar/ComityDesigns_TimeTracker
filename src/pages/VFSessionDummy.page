@@ -1,8 +1,0 @@
-<apex:page standardStylesheets="false" showHeader="false">
-    <script>    
-    	window.onload = function(){
-            console.log('Reload FRAME', (new Date()));
-            window.parent.postMessage({ type: 'PUSH_QUEUE', body: {} }, location.origin);
-        }
-    </script>
-</apex:page>
