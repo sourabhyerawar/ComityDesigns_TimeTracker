@@ -1,0 +1,30 @@
+<!--
+	@ PURPOSE : 1. DISPLAYS A RECORD IN THE LIST RELATED TO TYPEAHEAD FEATURE.
+				2. RECEIVES LABEL AND VALUE OF A RECORD TO DISPLAY IN THE LIST.
+				3. ALSO RECEIVES THE AURA ID OF THE FIELD AND NAME OF THE FIELD THAT HOLDS SOURCE RECORDS LIST.
+				4. FIRES SETSELECTION EVENT WITH SELECTED RECORD DETAILS.
+	@ NAME	  : SearchResultComponent.cmp
+-->
+
+<aura:component >
+    
+    <aura:registerEvent name="SetSelection" type="c:SetSelection" />
+    
+	<aura:attribute name="selectLabel" type="String" default=""/>
+	<aura:attribute name="selectValue" type="String" default=""/>
+    <aura:attribute name="fieldAuraId" type="String" default=""/>
+	<aura:attribute name="fieldNameOfListOfSourceRecords" type="String" default=""/>
+    
+    <div onclick="{! c.setSelection }">
+        <li role="presentation">
+            <span class="slds-lookup__item-action slds-media slds-media--center" role="option">
+                <div class="slds-media__body">
+                    <div class="slds-lookup__result-text">
+                        {! v.selectLabel }
+                    </div>
+                </div>
+            </span>
+        </li>	
+    </div>
+	
+</aura:component>

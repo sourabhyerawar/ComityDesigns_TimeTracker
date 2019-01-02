@@ -1,0 +1,8 @@
+/**
+	@ PURPOSE : STYLES THE LIGHTNING COMPONENT --> SearchResultComponent.cmp
+	@ NAME	  : SearchResultComponent.css
+*/
+
+.THIS .slds-media_center, .THIS .slds-media--center {
+    padding-left: 0.1rem;
+}

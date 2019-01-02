@@ -1,0 +1,27 @@
+<apex:page standardController="Time_Tracker__c" extensions="TimeTrackerUpdateController" showHeader="false" sidebar="false" title="TimeTracker Update">
+    
+    <apex:pagemessages />    
+    <apex:form id="theForm" >
+    
+        <apex:pageBlock title="{! $Label.LBL_Edit_Manual_entry}">
+            
+            <apex:pageBlockButtons id="detailButtons" location="top" >
+                <apex:commandButton id="saveBtn" value="Save" action="{!save}" 
+                                    disabled="{!(Time_Tracker__c.Source__c <> 'Manual' || isTimeSpentReadOnly)}"/>
+                <apex:commandButton id="cancelBtn" value="Cancel" action="{!cancel}" />
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection columns="2" id="pgBlckSct1">
+                <apex:outputField value="{!Time_Tracker__c.Name}"/>
+                <apex:outputField value="{!Time_Tracker__c.Activity_Date__c}"/>
+                <apex:inputField value="{!Time_Tracker__c.Time_Spent__c}"/>
+                <apex:selectList value="{!Time_Tracker__c.Opening_Action__c}" label="Activity" 
+                                 multiselect="false" size="1">
+                    <apex:selectOptions value="{!activities}"/>
+                </apex:selectList>
+                <apex:inputField value="{!Time_Tracker__c.Comment__c}" />
+            </apex:pageBlockSection> 
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Activity_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Activity Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Activity__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Activity</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Case Creation</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Case Cancel</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Case Review</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Case Documentation</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Cancelled Documentation</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Article Creation</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Article Cancellation</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Article Maintenance</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Article Attachment</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Case Closure</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Level 3</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Case Assignment</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Queue Monitoring</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Customer Escalations</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Time Tracking</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Reporting</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Chatter</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Task Creation</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Customer Chat</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Chat Supervisor</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Email</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Meeting</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Mentoring</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Point of Escalation</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Training - Consuming</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Training - Delivering</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Project Work</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Work Stoppage</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Break</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Out of Office</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Operations</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Enrollment</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>General - Other</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Shadowing Customer</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Comment__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Comment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Day_of_Week__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>MOD( Activity_Date__c - DATE(1900, 1, 6), 7)</formula>
+        <label>Day of Week</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duration_Hours__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>Duration__c / 3600</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Duration (Hours)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duration__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>VALUE(LEFT(Time_Spent__c, 2)) * 3600 +
+
+VALUE(
+
+LEFT(
+RIGHT(Time_Spent__c,
+           LEN(Time_Spent__c) - FIND(&apos;:&apos;, Time_Spent__c)),
+   FIND(&apos;:&apos;, 
+      RIGHT(Time_Spent__c,
+           LEN(Time_Spent__c) - FIND(&apos;:&apos;, Time_Spent__c)
+           )
+       )
+   - 1
+    )
+) * 60 +
+
+VALUE(RIGHT(Time_Spent__c, 2))</formula>
+        <inlineHelpText>@00:00</inlineHelpText>
+        <label>Duration (Seconds)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Spent__c</fullName>
+        <defaultValue>&apos;00:00:00&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Time Spent (HH:MM:SS)</label>
+        <length>8</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Timesheet__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Timesheet</label>
+        <referenceTo>Timesheet__c</referenceTo>
+        <relationshipLabel>Timesheet Entries</relationshipLabel>
+        <relationshipName>Timesheet_Entries</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Tracked_Duration_Hours__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>(Tracked_Duration__c/3600)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tracked Duration (Hours)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tracked_Duration__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tracked Duration (Seconds)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unique_TimesheetEntry_Identifier__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Unique TimesheetEntry Identifier</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>isUtilized__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Utilized</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Timesheet Entry</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Activity__c</columns>
+        <columns>Activity_Date__c</columns>
+        <columns>Time_Spent__c</columns>
+        <columns>Comment__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Today_s_Entries</fullName>
+        <columns>NAME</columns>
+        <columns>Activity_Date__c</columns>
+        <columns>Activity__c</columns>
+        <columns>Time_Spent__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Activity_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Today&apos;s Entries</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>TE-{0}</displayFormat>
+        <label>Timesheet Entry Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Timesheet Entries</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

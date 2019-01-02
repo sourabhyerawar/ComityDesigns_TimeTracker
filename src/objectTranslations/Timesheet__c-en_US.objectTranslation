@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Timesheet</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Timesheets</value>
+    </caseValues>
+    <fields>
+        <label><!-- Comment --></label>
+        <name>Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Friday Seconds --></label>
+        <name>Friday_Seconds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Friday Time Spent --></label>
+        <name>Friday_Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Friday --></label>
+        <name>Friday__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is My Team&apos;s Timesheet --></label>
+        <name>Is_My_Team_s_Timesheet__c</name>
+    </fields>
+    <fields>
+        <label><!-- Latest Submission Date --></label>
+        <name>Latest_Submission_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monday Seconds --></label>
+        <name>Monday_Seconds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monday Time Spent --></label>
+        <name>Monday_Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monday --></label>
+        <name>Monday__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Rejections --></label>
+        <name>Number_of_Rejections__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>13</masterLabel>
+            <translation><!-- 13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>14</masterLabel>
+            <translation><!-- 14 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15</masterLabel>
+            <translation><!-- 15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>16</masterLabel>
+            <translation><!-- 16 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>17</masterLabel>
+            <translation><!-- 17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>18</masterLabel>
+            <translation><!-- 18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>19</masterLabel>
+            <translation><!-- 19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20</masterLabel>
+            <translation><!-- 20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Number of Submissions --></label>
+        <name>Number_of_Submission_for_Approval__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>11</masterLabel>
+            <translation><!-- 11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>12</masterLabel>
+            <translation><!-- 12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>13</masterLabel>
+            <translation><!-- 13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>14</masterLabel>
+            <translation><!-- 14 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15</masterLabel>
+            <translation><!-- 15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>16</masterLabel>
+            <translation><!-- 16 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>17</masterLabel>
+            <translation><!-- 17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>18</masterLabel>
+            <translation><!-- 18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>19</masterLabel>
+            <translation><!-- 19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20</masterLabel>
+            <translation><!-- 20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Saturday Seconds --></label>
+        <name>Saturday_Seconds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Saturday Time Spent --></label>
+        <name>Saturday_Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Saturday --></label>
+        <name>Saturday__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted</masterLabel>
+            <translation><!-- Submitted --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Submit Early for Approval --></label>
+        <name>Submit_Early_for_Approval__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sunday Seconds --></label>
+        <name>Sunday_Seconds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sunday Time Spent --></label>
+        <name>Sunday_Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sunday --></label>
+        <name>Sunday__c</name>
+    </fields>
+    <fields>
+        <label><!-- Thursday Seconds --></label>
+        <name>Thursday_Seconds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Thursday Time Spent --></label>
+        <name>Thursday_Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Thursday --></label>
+        <name>Thursday__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Non Utilized Time Spent --></label>
+        <name>Total_Non_Utilized_Time_Spent_New__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Seconds --></label>
+        <name>Total_Seconds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Time Spent --></label>
+        <name>Total_Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Utilization Percentage --></label>
+        <name>Total_Utilization_Percentage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Utilized Seconds --></label>
+        <name>Total_Utilized_Seconds_New__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Utilized Time Spent --></label>
+        <name>Total_Utilized_Time_Spent_New__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tuesday Seconds --></label>
+        <name>Tuesday_Seconds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tuesday Time Spent --></label>
+        <name>Tuesday_Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tuesday --></label>
+        <name>Tuesday__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unique Timesheet Identifier --></label>
+        <name>Unique_Timesheet_Identifier__c</name>
+    </fields>
+    <fields>
+        <label><!-- User --></label>
+        <name>User__c</name>
+        <relationshipLabel><!-- Timesheets --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Wednesday Seconds --></label>
+        <name>Wednesday_Seconds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wednesday Time Spent --></label>
+        <name>Wednesday_Time_Spent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Wednesday --></label>
+        <name>Wednesday__c</name>
+    </fields>
+    <layouts>
+        <layout>Timesheet Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Reports --></label>
+            <section>Reports</section>
+        </sections>
+        <sections>
+            <label><!-- Time Spent --></label>
+            <section>Time Spent</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Bulk_Approve_Timesheets --></label>
+        <name>Bulk_Approve_Timesheets</name>
+    </webLinks>
+</CustomObjectTranslation>
