@@ -1,0 +1,192 @@
+{
+	"background": {
+		"persistent": true,
+		"scripts": [ "src/background/index.js", "src/constants.js" ]
+	},
+	
+	"browser_action": {
+		"default_icon": "icons/comity_tt_16_white.png",
+		"default_popup": "src/popup.html",
+		"default_title": "Time Tracker"
+	},
+	
+	"content_scripts": 
+	[ 
+		{
+			"all_frames": true,
+			"js": [ "src/constants.js", "src/logger.js", "src/lib/jquery.min.js", "src/inject.js", "src/content_scripts/events/index.js", "src/content_scripts/events/upload_files.js",  "src/lodash.js"],
+			"matches": [ "https://*.salesforce.com/*", "https://*.force.com/*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"js": [ "src/content_scripts/frames/top/list_navigation.js" ],
+			"matches": [ "https://*.salesforce.com/*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/service.js", "src/content_scripts/index.js" ],
+			"matches": [ "https://*.force.com/apex/TimeTrackerWidget*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/chat.js" ],
+			"matches": [ "https://*.salesforce.com/liveagent/chatlog.apexp*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/case_comment.js" ],
+			"matches": [ "https://*.salesforce.com/00a*/e?parent_id=*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/change_owner.js" ],
+			"matches": [ "https://*.salesforce.com/*/a?*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/mass_case_actions.js" ],
+			"matches": [ "https://*.salesforce.com/p/case/CaseMassAction*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"exclude_matches": [ "https://*.salesforce.com/00T*title=Call*" ],
+			"js": [ "src/content_scripts/events/task.js" ],
+			"matches": [ "https://*.salesforce.com/00T*/e*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/log_call.js" ],
+			"matches": [ "https://*.salesforce.com/00T*title=Call*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/event.js" ],
+			"matches": [ "https://*.salesforce.com/00U*/e*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/send_email.js" ],
+			"matches": [ "https://*.salesforce.com/_ui/core/email/author/EmailAuthor*p3_lkid=*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/attach_file.js" ],
+			"matches": [ "https://*.salesforce.com/p/attach/NoteAttach*pid=*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/attach_file.js" ],
+			"matches": [ "https://*.salesforce.com/00P*/e*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/case.js" ],
+			"matches": [ "https://*.salesforce.com/500*/e*", "https://*.salesforce.com/setup/ui/recordtypeselect.jsp*ekp=500*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/account.js" ],
+			"matches": [ "https://*.salesforce.com/001*/e*", "https://*.salesforce.com/setup/ui/recordtypeselect.jsp*ekp=001*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/contact.js" ],
+			"matches": [ "https://*.salesforce.com/003*/e*", "https://*.salesforce.com/setup/ui/recordtypeselect.jsp*ekp=003*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/opportunity.js" ],
+			"matches": [ "https://*.salesforce.com/006*/e*", "https://*.salesforce.com/setup/ui/recordtypeselect.jsp*ekp=006*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/lead.js" ],
+			"matches": [ "https://*.salesforce.com/00Q*/e*", "https://*.salesforce.com/setup/ui/recordtypeselect.jsp*ekp=00Q*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/close_case.js" ],
+			"matches": [ "https://*.salesforce.com/500*/s*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/order.js" ],
+			"matches": [ "https://*.salesforce.com/801*/e*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/campaign.js" ],
+			"matches": [ "https://*.salesforce.com/701*/e*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/contract.js" ],
+			"matches": [ "https://*.salesforce.com/800*/e*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/solution.js" ],
+			"matches": [ "https://*.salesforce.com/501*/e*" ],
+			"run_at": "document_end"
+		}, 
+		{
+			"all_frames": true,
+			"exclude_matches": [ "https://*.salesforce.com/500*/e*", "https://*.salesforce.com/500*/s*", "https://*.salesforce.com/500?fcf=00B*" ],
+			"js": [ "src/content_scripts/events/chatter/index.js" ],
+			"matches": [ "https://*.salesforce.com/500*" ],
+			"run_at": "document_end"
+		},
+		{
+			"all_frames": true,
+			"js": [ "src/content_scripts/events/lightningTimeTracker.js"],
+			"matches": [ "https://*.salesforce.com/*", "https://*.force.com/*" ],
+			"run_at": "document_end"
+		}
+	],
+	
+	"content_security_policy": "script-src 'self' https://*.force.com/ https://*.salesforce.com/; object-src 'self'",
+	"default_locale": "en",
+
+	"description": "Tool for service agents to track their time automatically in Salesforce",
+	"externally_connectable": {
+		"matches": [ "https://*.force.com/*", "https://*.salesforce.com/*" ]
+	},
+	
+	"icons": {
+		"128": "icons/comity_tt_128_white.png",
+		"16": "icons/comity_tt_16_white.png",
+		"48": "icons/comity_tt_48_white.png"
+	},
+	
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA/KxsnlNs5pAQ9oHoTppusH6sR+OAeJokp3MYgPYrPe23wyAcHUH28QWW61m4qOHLU1+xr/ziCujvW8Y2vFoAPr9OLOGWdsvrtb20Z/8B2BtN4YR1Ntes1r+Gh/8J06fbNjgv5yfr/t4ZqFPpLiQkhwOzLhY9NDiV9r8SCVjRFrqwG8S/CQCoDE1BJWQD0qfWTtgisfAkP+VfRo5XPdMNzktPk2l6Ng2xmiZrgEXyh6z45PEZMfbdTwfftY20aIrpu2y0qaUbBGNx3k4CB7GVE/EaWByu5jnNGWbFDDqFVG3fLE5jEdEXbY5OkbpXN+ov7/jzZ4moQErIXCU8FgfirQIDAQAB",
+
+	"manifest_version": 2,
+	"name": "Time Tracker Tool (by Comity Designs)",
+
+	"permissions": [ "https://*.salesforce.com/*", "https://*.force.com/*", "tabs", "activeTab", "storage", "background", "notifications" ],
+	"update_url": "https://clients2.google.com/service/update2/crx",
+	"version": "2.0.0.8",
+
+	"web_accessible_resources": [ "https://*.force.com/resource*", "https://*.salesforce.com/resource*", "src/constants.js", "src/logger_external.js", "src/content_scripts/events/index.js", "src/lib/jquery.min.js" ]
+}
