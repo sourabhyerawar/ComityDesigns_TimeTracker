@@ -1,0 +1,2 @@
+<aura:event type="APPLICATION" 
+            description="This event is fired whenever Organization level values are updated succesfully" />

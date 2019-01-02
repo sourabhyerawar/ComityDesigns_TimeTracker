@@ -1,0 +1,140 @@
+<!--
+	@ Purpose : 1. Displays the table of ConfigSetting records when filter from 'Configuration Settings' tab is applied.
+				2. Loads the 'ConfigSettingRecordModal' component when edited the table row.
+				3. Each table value is being displayed by 'CustomSettingValue' component.
+	@ Name	  : ConfigSettingDetailsComponent.cmp
+-->
+<aura:component access="global" controller="AdminPageComponentController" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes">
+    
+	<!-- Dependencies -->
+    <aura:dependency resource="markup://c:Spinner" />
+    <aura:dependency resource="markup://c:CustomSettingValue" />
+    <aura:dependency resource="markup://c:configSettingRecordModal" />
+    
+    <!-- Attributes -->
+    <aura:attribute name="rowIndex" type="integer" default="0"/>
+    <aura:attribute name="customSettingValueRow" type="integer" default="0"/>
+    <aura:attribute name="customSettingByTypeSettingType" type="Object[]"/>
+    <aura:attribute name="consts" type="Object"/>
+    <aura:attribute name="customSettingMetadata" type="String"/>
+    <aura:attribute name="namespace" type="String"/>
+    <aura:attribute name="displayFields" type="Object[]"/>
+    <aura:attribute name="noOfRecords" type="Integer" default='0'/>
+    <aura:attribute name="customSetting" type="Object[]" />
+    <aura:attribute name="tempCustomSetting" type="Object[]" />
+    <aura:attribute name="originalCustomSetting" type="Object[]" />
+    <aura:attribute name="updatedCustomSettingList" type="Object[]" default="[]" />
+    <aura:attribute name="isthisChanged" type="boolean" default="true" />
+    <aura:attribute name="iterationOver" type="boolean" default="false" />
+    <aura:attribute name="toastMSG" type="String" default="Records Saved Successfully"/>
+    <aura:attribute name="toastTitle" type="String" default="SUCCESS"/>
+    <aura:attribute name="toastType" type="String" default="success"/>
+    <aura:attribute name="numberOfChildComponents" type="Integer" default="0" />
+    <aura:attribute name="tableSize" type="Integer" />
+    <aura:attribute name="isListLoaded" type="boolean" default="false"/>
+    <aura:attribute name="tempComponent" type="Aura.Component"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="setIntervalId" type="String"/>
+    <aura:attribute name="isNotFiltered" type="Boolean" default="true"/>
+    <aura:attribute name="InitialCustomSetting" type="String" />
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:counterEvent" action="{!c.countComponents}"/>
+    <aura:handler event="c:changeColorEvt" action="{!c.changeColor}" includeFacets="true"/>
+    <aura:handler event="c:updateEvent" action="{!c.handleUpdateEvent}"/>
+    <aura:handler event="c:callServerEvent" action="{!c.handleCallServerEvent}"/>
+    <aura:handler event="c:FilterTableEvent" action="{!c.handleFilterTableEvent}"/>
+    <!--aura:handler event="c:SpinnerToggle" action="{!c.showSpinner}"/ -->
+    
+    <!-- Event Registration -->
+    <aura:registerEvent name="createFilter" type="c:createFilter"/>
+    <aura:registerEvent name="afterSaveRefresh" type="c:afterSaveRefresh"/>
+    
+    <!-- <aura:registerEvent name="SpinnerToggle" type="c:SpinnerToggle"/>-->
+    <div class="slds" style="min-height: 700px; overflow-y:hidden">
+        
+        <div aura:id="errorMsgID" class="slds-hide">
+            <c:ErrorLabelComponent errorMsg="{!v.errorMsg}" />
+        </div>
+        
+        <!--spinner-->
+        <lightning:spinner alternativeText="Loading..." aura:id="spinnerDiv" 
+                           class="slds-hide" variant="brand" 
+                           size="small"/>
+        
+        <article class="slds-card slds-is-relative" >
+            <table class="slds-table slds-table_edit slds-table_bordered slds-table_resizable-cols slds-no-cell-focus slds-table--striped " 
+                   role="grid" >
+                <thead>
+                    <!--Dynamic display of field labels as columns of table-->
+                    <tr class="slds-line-height_reset ">
+                        <th  class="slds-is-sortable  slds-text-title_caps slds-th__action" 
+                            style="background-color:#FAFAF9;" 
+                            title="{!v.consts.LBL_ACTION}">&nbsp;&nbsp;{!v.consts.LBL_ACTION}</th>
+                        <aura:iteration var="field" items="{!v.displayFields}" >
+                            <th scope="col" aura:id="colHeader" 
+                                class="slds-is-sortable slds-text-title_caps slds-has-focus">
+                                <div class="slds-th__action slds-text-link_reset" title="{!field.description}">
+                                    {!field.labelName}
+                                </div>
+                            </th>
+                        </aura:iteration>
+                    </tr>
+                </thead>
+                <!--Table contents dynamically displayed for selected view-->
+                <tbody>
+                    <aura:iteration aura:id="iterationID" var="setting" items="{!v.customSetting}" indexVar="index">
+                        <tr class="slds-hint-parent">
+                            <td role="gridcell" class="slds-cell-edit" width="7%">
+                                <span class="slds-grid">
+                                    <a href="javascript:void(0);" data-index="{!index}" onclick="{!c.editRow}" >
+                                        <strong>{!v.consts.LBL_EDIT}</strong>
+                                    </a>
+                                    &nbsp;|&nbsp;
+                                    <a href="javascript:void(0);" data-index="{!index}" onclick="{!c.deleteRow}" >
+                                        <strong>{!v.consts.LBL_DEL}</strong>
+                                    </a>
+                                </span>
+                            </td>
+                            <aura:iteration var="field" items="{!v.displayFields}" indexVar="colIndex">
+                                <td role="gridcell" class="slds-cell-edit">
+                                    <div class="slds-truncate" onmouseover="{!c.handleMouseOver}">
+                                        <span>
+                                            <c:CustomSettingValue setting="{!setting}" settingType="{!v.settingType}" 
+                                                                  field="{!field}" rowIndex="{!index}" colIndex="{!colIndex}"/>
+                                        </span>
+                                    </div>
+                                </td>
+                            </aura:iteration>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </article>
+        <div aura:id="noRecordsDiv" class="slds-hide slds-grid">
+            <div class="slds-col slds-text-align--center">
+                <h2><lightning:icon title="{!v.consts.LBL_NO_RECORDS}" aura:id="info" size="x-small" 
+                                    iconName="utility:info_alt" />&nbsp;
+                    {!v.consts.LBL_NO_RECORDS}</h2>
+            </div>
+        </div>
+    </div>
+    <div aura:id="moreDiv" onclick="{!c.handleMore}" class="slds-hide slds-text-align--center">
+        <a>
+            <span >{!v.consts.LBL_MORE_RECORDS}
+            	<lightning:icon title="{!v.consts.LBL_MORE_RECORDS}" size="x-small" iconName="utility:arrowdown"/>
+            </span>
+        </a>
+    </div>
+    <br/>
+    <div class="slds slds-is-relative">
+        <div  aura:id="scrollTextDiv" class="slds-hide slds-col slds-text-align--center">
+            <h2><lightning:icon title="Loading" aura:id="arrowdown" size="x-small" iconName="utility:clock" />
+                Loading....
+            </h2>
+        </div>
+    </div>
+    {!v.body}
+</aura:component>

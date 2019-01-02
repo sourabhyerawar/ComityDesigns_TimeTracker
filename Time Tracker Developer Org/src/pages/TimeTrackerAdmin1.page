@@ -1,0 +1,64 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">    
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">    
+
+<head>
+  <title>TimeTracker Admin Mockup</title>
+  <apex:stylesheet value="{!URLFOR($Resource.SDLC, 'assets/styles/salesforce-lightning-design-system.css')}" />
+  <apex:includeScript value="{!URLFOR($Resource.TimeTracker, 'js/jquery.min.js')}"/>
+</head>    
+
+<body>    
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds">    
+
+    <!-- MASTHEAD -->
+    <h1 class="slds-text-heading--label slds-m-bottom--large">TimeTracker Admin</h1>
+
+      <ul class="slds-tabs--default__nav" role="tablist">
+          <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="TimeTracker User Settings" role="presentation">
+              <a class="slds-tabs--default__link" href="#void" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item" onclick="selectTab(this);">TimeTracker User Settings</a>
+          </li>
+          <li class="slds-tabs--default__item slds-text-heading--label" title="TimeTracker Config Settings" role="presentation">
+              <a class="slds-tabs--default__link" href="#void" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item" onclick="selectTab(this);">TimeTracker Config Settings</a>
+          </li>
+      </ul>
+    <!-- / MASTHEAD -->    
+
+    <!-- PRIMARY CONTENT WRAPPER -->
+    <div class="slds-grid">    
+
+    </div>
+    <!-- / PRIMARY CONTENT WRAPPER -->    
+
+  </div>
+  <!-- / REQUIRED SLDS WRAPPER -->    
+
+</body>
+
+<script>
+function selectTab(elmnt) {
+    // slds-active
+    $(elmnt).parent("li").siblings(".slds-active").removeClass("slds-active");
+    $(elmnt).parent("li").addClass("slds-active");
+
+    // tabindex
+    $(elmnt).parent("li").siblings().children("a").attr("tabindex", -1);
+    $(elmnt).attr("tabindex", 0);
+
+    // aria-selected
+    $(elmnt).parent("li").siblings().children("a").attr("aria-selected", false);
+    $(elmnt).attr("aria-selected", true);
+
+    // hiding previouly selected tab (slds-show/slds-hide)
+    $(elmnt).closest(".slds-tabs--default").children("div[role='tabpanel'].slds-show").addClass("slds-hide");
+    $(elmnt).closest(".slds-tabs--default").children("div[role='tabpanel'].slds-show").removeClass("slds-show");
+    // displaying newly selected tab (slds-show/slds-hide)
+    $(elmnt).closest(".slds-tabs--default").children("div[aria-labelledby='"+elmnt.id+"']").addClass("slds-show");
+    $(elmnt).closest(".slds-tabs--default").children("div[aria-labelledby='"+elmnt.id+"']").removeClass("slds-hide");
+}
+</script>
+
+</html>
+</apex:page>

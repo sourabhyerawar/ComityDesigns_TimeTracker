@@ -1,0 +1,57 @@
+<aura:component >
+    <aura:attribute name="type" type="String" />
+    <aura:attribute name="title" type="String" />
+    <aura:attribute name="message" type="String" />
+    <aura:attribute name="cstype" type="String"/>
+    <aura:attribute name="csObj" type="Object"/>
+
+    <aura:handler name="init" action="{!c.handleInit}" value="{!this}" />
+
+    <aura:registerEvent name="refreshUserSettingTabEvent" type="c:refreshUserSettingTabEvent" />
+    <aura:registerEvent name="callServerEvent" type="c:callServerEvent" />
+    <aura:registerEvent name="afterSaveRefresh" type="c:afterSaveRefresh"/>
+    
+    <div class="slds">
+        <!--Success message toast-->
+        <div aura:id="toastDiv" class="slds-notify_container slds-hide">
+            <div aura:id="typeDiv" class="slds-notify slds-notify--toast slds-theme--success" role="alert">
+                <span class="slds-assistive-text">{!v.title}</span>
+                <button class="slds-button slds-notify__close slds-button--icon-inverse" title="Close" onclick="{!c.closeToast}">
+                    <c:SVGIcon svgPath="/resource/SLDS214/assets/icons/action-sprite/svg/symbols.svg#close"
+                               class="slds-button__icon slds-button__icon--large" assistiveText="Close"/>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <div class="slds-notify__content slds-grid">
+                    <c:SVGIcon svgPath="/resource/SLDS214/assets/icons/utility-sprite/svg/symbols.svg#notification"
+                               class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex"/>
+                    <div class="slds-col slds-align-middle">
+                        <h2 class="slds-text-heading--small ">{!v.message}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Success message toast END-->
+        <!--Prompt message toast-->
+        <div aura:id="promptDivId" role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-hide slds-backdrop slds-backdrop--open slds-modal slds-fade-in-open slds-modal--prompt">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+                    <button class="slds-button slds-notify__close slds-button--icon-inverse" title="Close" onclick="{!c.closeToast}">
+                        <c:SVGIcon svgPath="/resource/SLDS214/assets/icons/action-sprite/svg/symbols.svg#close"
+                                   class="slds-button__icon slds-button__icon--large " assistiveText="Close"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium" id="prompt-heading-id">{!v.title}</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium slds-text-align--center">
+                    <p>{!v.message}</p>
+                </div>
+                <div class="slds-modal__footer slds-theme--default">
+                    <lightning:button variant="brand" label="OK" onclick="{! c.handleOK }" />
+                    <lightning:button variant="neutral" label="Cancel" onclick="{! c.closeToast }" />
+                </div>
+            </div>
+        </div>
+        <!--Prompt message toast END-->
+    </div>
+    
+</aura:component>

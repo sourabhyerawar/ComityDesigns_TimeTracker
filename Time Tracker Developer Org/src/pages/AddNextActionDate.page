@@ -1,0 +1,16 @@
+<apex:page standardcontroller="Case" extensions="CaseNextActionExtension" showHeader="false">
+    <!-- Uses publisher.js rather than interaction.js -->
+    <apex:includeScript value="/canvas/sdk/js/28.0/publisher.js"/>
+    <div>
+        <apex:form >
+           <!-- Accepts & saves the new Next Action date and creates a case comment to log it and also, on complete notifies the Case Feed page that a related list and the feed have been updated -->
+           <apex:actionFunction action="{!saveCase}" name="save" rerender="fields" oncomplete="Sfdc.canvas.publisher.publish({name : 'publisher.refresh',  payload : {feed: true, objectRelatedLists: {}}});"/> 
+           <apex:pageBlock id="fields">
+                <apex:pageBlockSection >
+                    <apex:inputField value="{!caseRec.Next_Action_Date__c}" />
+                </apex:pageBlockSection>
+           </apex:pageBlock>
+        </apex:form><br/>
+        <button type="button" onclick="save();" style="position:fixed; bottom:0px; right:2px; padding: 5px 10px; font-size:13px;" id="cpbutton" >Save</button>
+    </div>
+</apex:page>

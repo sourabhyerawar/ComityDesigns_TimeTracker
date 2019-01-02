@@ -1,0 +1,13 @@
+<apex:page standardController="Employee__c" title="New Employee">
+  <!-- Begin Default Content REMOVE THIS -->
+<h6>This is custom VF Page</h6>
+ <apex:form >
+     Name :<apex:inputField label="Name" value="{!Employee__c.Name}" required="true" /><br></br>
+     Conatct Number :<apex:inputField label="Conatct Number" value="{!Employee__c.Contact_Number__c}" required="true" /><br></br>
+     Email :<apex:inputField label="Email" value="{!Employee__c.Email__c}" required="true" /><br></br>
+     <apex:commandButton action="{!save}" value="Save"/>
+     <apex:commandButton action="{!cancel}" value="cancel"/>
+
+ </apex:form>
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

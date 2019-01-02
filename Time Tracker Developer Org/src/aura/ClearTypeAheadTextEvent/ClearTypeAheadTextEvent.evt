@@ -1,0 +1,9 @@
+<!--
+	@ Purpose 	 : Whenever 'X' is clicked on Type Ahead Search Lookup field, 
+				   reset the details of the form of component => 'ConfigSettingsNewEntryForm'.
+	@ Event Name : ClearTypeAheadTextEvent.evt
+-->
+
+<aura:event type="COMPONENT" 
+            description="This event fires when X is pressed on input type ahead field of Search Component">
+</aura:event>

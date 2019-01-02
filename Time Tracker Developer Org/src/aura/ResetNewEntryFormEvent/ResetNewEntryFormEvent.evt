@@ -1,0 +1,10 @@
+<!--
+ 	@ Purpose 	 : This Event is fired whenever Cancel/Reset button is pressed on ConfigSettingsNewEntryFormComponent
+	@ Event Name : ResetNewEntryFormEvent.evt
+-->
+<aura:event type="APPLICATION" 
+            description="This Event is fired whenever Cancel/Reset button is pressed on ConfigSettingsNewEntryFormComponent">
+
+	<aura:attribute name="clearTypeAheadText" type="BOOLEAN" default="TRUE"/>
+	
+</aura:event>

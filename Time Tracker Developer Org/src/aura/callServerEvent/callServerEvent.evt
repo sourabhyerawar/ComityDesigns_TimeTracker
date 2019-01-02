@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Event template" >
+	<aura:attribute name="cstype" type="String"/>
+	<aura:attribute name="csToUpdate" type="Object" />
+	<aura:attribute name="csToDelete" type="Object" />
+</aura:event>

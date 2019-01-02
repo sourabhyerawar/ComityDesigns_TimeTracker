@@ -1,0 +1,99 @@
+<aura:component controller="LightningManualWidgetController" implements='flexipage:availableForAllPageTypes'>    
+    
+	<lightning:workspaceAPI aura:id="workspace" />	
+    
+    <!-- This event fires whenever a new tab is opened and closed or switched to an existing tab -->
+    <aura:handler event='lightning:tabFocused' action='{! c.handleTabFocused }'/>
+    <aura:attribute name="currentTabJSON" type="STRING" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />    
+    <aura:registerEvent name="clearTypeAheadText" type="c:ClearTypeAheadTextEvent"/>
+    <aura:handler name="change" value="{!v.searchInput}" action="{!c.searchInputChange}"/>
+    <aura:handler event="c:SetSelection" action="{!c.setSelectedValue}"/>
+    
+    <aura:attribute name='activeTimeStamps' type='Object[]' default='[]'/> 
+    <aura:attribute name='inactiveTimeStamps' type='Object[]' default='[]'/> 
+    <aura:attribute name='searchedRecordList' type='sObject[]' default='[]'/> 
+    <aura:attribute name='showFields' type='String[]' default='[]'/> 
+	<aura:attribute name="trackedDuration" type="String"/>     
+    <aura:attribute name='trackedTime' type='String' default='00:00:00'/>      
+    <aura:attribute name='timerId' type='String' default=''/>
+    <aura:attribute name='sObjectApiName' type='String'/>
+    <aura:attribute name='searchField' type='String'/>
+    <aura:attribute name="sObjectLabel" type="String" default='Case' />
+	<aura:attribute name="commentLabel" type="String" default='Comment' />
+	<aura:attribute name="sObjectRecordList" type="String[]" />	
+    <aura:attribute name="icon" type="String" default="utility:right" />
+	<aura:attribute name="selectedValue" type="String"/>
+	<aura:attribute name="activityDate" type="Datetime" />
+	<aura:attribute name="searchInput" type="String" default="" />
+	<aura:attribute name="comment" type="String" />
+    <aura:attribute name="errors" type="List"/>
+    <aura:attribute name="isValid" type="Boolean" default="false" />
+    <aura:attribute name="isBtnDisabled" type="Boolean" default="false" />
+    <aura:attribute name="isStopDisabled" type="Boolean" default="true" />
+    <aura:attribute name="isSobjectDisabled" type="Boolean" default="true" />
+    <aura:attribute name="isSubmitDisabled" type="Boolean" default="false" />
+    <aura:attribute name="isTimerDisabled" type="Boolean" default="false" />
+    <aura:attribute name="isSobjectRequired" type="Boolean" default="false" />
+	<aura:attribute name="isCommentRequired" type="Boolean" default="false" />
+    <aura:attribute name="showSobjectRecordList" type="boolean" default="false"/>
+    
+	<lightning:layout >
+        <lightning:layoutItem padding="around-small">
+			<div aria-labelledby="newitemform">
+		        <form class="slds-form--stacked"> 
+                     <ui:inputDateTime aura:id="actDate" label="Activity Date" class="form-control" value="{!v.activityDate}" displayDatePicker="true" required="true"/>	                      
+       				&nbsp;&nbsp;
+                    <article class="slds-card slds-wrap">
+                    	<div aura:id="time" style="font-size: 60px; font-style: normal;" >
+                            <ui:inputText aura:id="timer" labelClass='0' value="{!v.trackedTime}" class="timer slds-text-align_center" disabled="{!v.isTimerDisabled}" />
+                        </div>
+                    	<div align="center">        
+                            <lightning:buttonIcon iconName="{!v.icon}" variant="bare" size="large" onclick="{!c.start}" disabled="{!v.isBtnDisabled}" />&nbsp;
+                            <lightning:buttonIcon iconName="utility:stop" variant="bare" size="large" onclick="{!c.stop}" disabled="{!v.isStopDisabled}"/>
+                    	</div>
+                    </article>
+				    &nbsp;
+                    <ui:inputSelect aura:id="activityLst" label="Select Activity" value="{!v.selectedValue}" required="true" change="{!c.getSObjectDetails}" />  
+                    &nbsp;
+                    <div class="slds-form-element slds-lookup slds-is-open">
+				        <div class="slds-form-element__control">
+				            <div class="slds-input-has-icon slds-input-has-icon--left-right">             
+				                <ui:inputText aura:id="searchInput" value="{!v.searchInput}" updateOn="keyup" label="{!v.sObjectLabel}"
+				                              placeholder="{!'Search '+ v.sObjectLabel}" class="slds-input slds-lookup__search-input" 
+				                              keyup="{!c.getRelatedData}" required="{!v.isSobjectRequired}" disabled="{!v.isSobjectDisabled}" />
+				                
+				                <button aura:id="clearbtn" class="slds-input__icon slds-hide slds-input__icon--right slds-button slds-button--icon slds-input__icon--right" 
+				                        onclick="{!c.clearSearchtext}">
+				                    <lightning:buttonIcon iconName="utility:clear" size="x-small" class="slds-input__icon"/>
+				                    <span class="slds-assistive-text">Clear the current search term</span>
+				                </button>
+				            </div>
+				        </div>
+				        <div aura:id="lookupMenu" class="slds-hide">
+				            <ul class="slds-lookup__list" role="listbox">
+				                <div aura:id="iterationID">
+				                    <aura:iteration items="{!v.sObjectRecordList}" var="entity">
+				                         <c:SearchResultComponent selectLabel="{!entity}" selectValue="{!entity}"/>
+				                    </aura:iteration>    
+				                </div>
+				            </ul>
+				        </div>
+	                    <a href="javascript:void(0)" onclick="{!c.getFocusedTab}"> Get from Active Tab </a>
+        			</div> 
+                     &nbsp;
+		            <ui:inputText aura:id="commentFld" label="{!v.commentLabel}" value="{!v.comment}" required="{!v.isCommentRequired}" /> 
+                    <div class="slds-align_absolute-center">
+                    	<aura:iteration items="{!v.errors}" var="error" >{!errors}</aura:iteration> 
+                    </div>
+                    <lightning:button label="Submit" 
+                                      class="slds-m-top--medium slds-align_absolute-center"
+                                      variant="brand"
+                                      onclick="{!c.handleSubmit}"
+                                      disabled="{!v.isSubmitDisabled}" />                 
+		        </form>
+    		</div>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

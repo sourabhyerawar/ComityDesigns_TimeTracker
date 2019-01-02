@@ -1,0 +1,51 @@
+.THIS {
+}
+
+.THIS .hideInputField {
+    display : none;
+}
+
+.THIS .infoSection {
+    background-color: antiquewhite  !important;
+    border-radius: 5px  !important;
+    
+}
+
+.THIS .infoMessage {
+    line-height: 1px !important;
+}
+
+.THIS .alert {
+	padding: 8px 35px 8px 14px;
+	margin-bottom: 18px;
+	color: #c09853;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	background-color: #fcf8e3;
+	border: 1px solid #fbeed5;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.THIS .alert-success {
+	color: #468847;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+}
+
+.THIS .alert-error {
+	color: #ff0000;
+	 font-weight: 900;
+	background-color: #f2dede;
+	border-color: #eed3d7;
+}
+
+.THIS .form-footer {
+    width:100%;
+    margin: auto;
+    background:#eee;
+    text-align:justify;
+    text-align-last:justify;
+    -moz-text-align-last:justify;
+    padding:3px;
+}

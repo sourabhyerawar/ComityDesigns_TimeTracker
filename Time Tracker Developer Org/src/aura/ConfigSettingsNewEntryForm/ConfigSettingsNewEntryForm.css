@@ -1,0 +1,54 @@
+.THIS .uiInputDateTime .datePicker-openIcon {
+    position: absolute;
+    left: 45%;
+    top: 45%;
+}
+
+.THIS .hide-element {
+  display: none;
+}
+
+.THIS .show-element {
+  display: block;
+}
+
+.THIS .uiInputDateTime .timePicker-openIcon {
+    position: absolute;
+    left: 95%;
+    top: 70%;
+}
+
+.THIS .uiInputDefaultError li {
+    list-style: none;
+}
+
+.THIS .pull-picklist {
+    width: 100%;
+}
+
+
+.THIS .uiButton .buttonLabel {
+    color: #fff;
+}
+
+.THIS .uiButton{
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.THIS .uiButton--default:hover{
+    background: #036baf;
+    text-shadow: none;
+    box-shadow: none;
+    color: #fff;
+}
+
+.THIS .form-footer {
+    width:100%;
+    margin: auto;
+    background:#eee;
+    text-align:justify;        /* Needed by IE */
+    text-align-last:justify;
+    -moz-text-align-last:justify;
+    padding:3px;
+}

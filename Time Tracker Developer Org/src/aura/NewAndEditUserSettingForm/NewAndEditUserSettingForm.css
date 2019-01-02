@@ -1,0 +1,11 @@
+.THIS {
+}
+.THIS .form-footer {
+    width:100%;
+    margin: auto;
+    background:#eee;
+    text-align:justify;        /* Needed by IE */
+    text-align-last:justify;
+    -moz-text-align-last:justify;
+    padding:3px;
+}

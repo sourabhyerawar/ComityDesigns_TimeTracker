@@ -1,0 +1,12 @@
+.THIS.textClass {
+    background-color:#fcfad4;
+}
+
+.THIS.widthClass {
+    width : 270px;
+}
+
+.THIS .test {
+	position: relative;
+	width: 65%;
+}

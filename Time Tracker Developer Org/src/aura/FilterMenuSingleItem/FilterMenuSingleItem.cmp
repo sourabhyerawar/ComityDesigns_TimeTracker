@@ -1,0 +1,63 @@
+<aura:component >
+
+    <!-- Aura attributes -->
+    <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="filterMenu" type="Object[]"/>
+    <aura:attribute name="indexData" type="String"/>
+    <aura:attribute name="thisHandlesEvent" type="Boolean" default="false"/>
+    <aura:attribute name="textFilterValue" type="String"/>
+    <aura:attribute name="consts" type="Object"/>
+	
+    <!-- Aura Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:fetchFilters" action="{!c.sendFilters}"/>
+    <aura:handler event="c:resetFilterEvent" action="{!c.resetFilters}"/>
+    <aura:method name="sendFilters" action="{!c.sendFilters}" description="sends the filter if selected" />
+	
+    <!-- Aura event registration -->
+    <aura:registerEvent name="SendFilter" type="c:SendFilter"/>
+	
+    <ol aura:id="filtermenulist">
+        <aura:iteration var="filterMenuObj" items="{!v.filterMenu}" indexVar="index">
+            <li class="slds-dropdown__header" role="separator" onclick="{!c.populateIndexData}">
+                <span style="margin-right:10px">{!index+1}</span>
+                <a role="menuitemcheckbox" tabindex="0" onclick="{!c.toggleSelection}">
+                    <span class="slds-truncate">
+                        <lightning:icon aura:id="checkIconID" iconName="utility:check" size="x-small" class="slds-hide"/>
+                        {!filterMenuObj.labelName}
+                    </span>
+                </a>
+                <span class="slds-form-element slds-hide filter-type-boolean" >
+                    <label class="slds-checkbox--toggle slds-grid">
+                        <ui:inputCheckbox change="{!c.selectChange}"/>
+                        <span id="toggle-desc" class="slds-checkbox--faux_container" aria-live="assertive">
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-checkbox--on">Show</span>
+                            <span class="slds-checkbox--off">Hide</span>
+                        </span>
+                    </label>
+                </span> 
+                <div data="{!index}" class="slds-hide filter-type-text">
+                    <lightning:select name="{!filterMenuObj.labelName}" label=" " onblur="{!c.setSelectedValue}" >
+                        <option value="{!v.consts.LBL_SELECT}">{!v.consts.LBL_SELECT}</option>
+                        <aura:iteration var="value" items="{!filterMenuObj.uniqueValues}">
+                            <option value="{!value}">
+                                <aura:if isTrue="{!value == true}">
+                                	Yes
+                                	<aura:set attribute="else">
+                                    	<aura:if isTrue="{!value == false}">
+                                            No
+                                            <aura:set attribute="else">
+                                                {!value}
+                                            </aura:set>
+                                        </aura:if>
+                                    </aura:set>
+                                </aura:if> 
+                            </option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>  
+            </li>
+        </aura:iteration>
+    </ol>
+</aura:component>

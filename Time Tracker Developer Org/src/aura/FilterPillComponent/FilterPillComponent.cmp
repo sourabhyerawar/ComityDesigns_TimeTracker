@@ -1,0 +1,17 @@
+<aura:component >
+    <aura:attribute name="pillDetailsList" type="Object[]" />
+    <aura:attribute name="totalPills" type="Object[]" />
+    <aura:registerEvent name="ClearFilterPillEvent" type="c:ClearFilterPillEvent" />
+    <aura:registerEvent name="SpinnerToggle" type="c:SpinnerToggle" />
+    <aura:registerEvent name="resetFilterEvent" type="c:resetFilterEvent" />
+    
+    <aura:iteration var="pillDetails" items="{!v.pillDetailsList}" indexVar="index">
+        <span class="slds-m-horizontal--x-small slds-m-bottom--x-small">
+            <span aura:id="pillID" class="slds-pill">{!pillDetails.labelName}
+                <button class="slds-button slds-buttonicon slds-pill__remove" title="Remove" data="{!index}" onclick="{!c.removeFilter}">
+                    <lightning:icon iconName="utility:close" size="x-small" class="slds-input__icon" alternativeText="Remove" />
+                </button>
+            </span>
+        </span>
+    </aura:iteration>
+</aura:component>

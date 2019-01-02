@@ -1,0 +1,13 @@
+<apex:page standardController="Employer__c">
+    
+    <apex:form >
+    
+        <apex:pageblock >
+        
+            <apex:outputField value="{!Employer__c.Name}"/>
+            
+        </apex:pageblock>
+        
+    </apex:form>
+    
+</apex:page>

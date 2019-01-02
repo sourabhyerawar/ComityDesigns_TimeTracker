@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="Event template" >
+	<aura:attribute name="rowIndex" type="Integer"/>
+    <aura:attribute name="colIndex" type="Integer"/>
+    <aura:attribute name="isAdd" type="Boolean"/>
+</aura:event>

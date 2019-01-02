@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event template" >
+    <aura:attribute name="customSettingList" type="Object[]"/>
+    <aura:attribute name="displayFieldsMetadata" type="Object[]"/>
+</aura:event>

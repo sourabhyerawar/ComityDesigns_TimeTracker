@@ -1,0 +1,75 @@
+<aura:component >
+
+    <!-- Aura attributes -->
+    <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="consts" type="Object"/>
+    <aura:attribute name="checkboxFilterList" type="String" />
+    <aura:attribute name="textualFilterList" type="String" />
+    <aura:attribute name="textualFilterCount" type="String" />
+    <aura:attribute name="settingType" type="String" />
+    <aura:attribute name="filteringAttributeList" type="Object[]" />
+    <aura:attribute name="currentPillList" type="Object[]" default="[]"/>
+    <aura:attribute name="customSettingList" type="Object[]" />
+    <aura:attribute name="editableCustomSettingList" type="Object[]" />
+    <aura:attribute name="customSettingList_Backup" type="Object[]" />
+    <aura:attribute name="fieldNamesList" type="String[]" />
+    <aura:attribute name="displayFieldsMetadata" type="Object[]"/>
+    <aura:attribute name="doneLabel" type="String" default="Apply"/>
+    <aura:attribute name="fieldAPINameToValueMap" type="Map" default="{}"/>
+    <aura:attribute name="fieldAPINameToValueMap_Backup" type="Map" default="{}"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="filterPillFacet" type="Aura.Component[]"/>
+	
+    <!-- Aura Event Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="SendFilter" event="c:SendFilter" action="{!c.receiveSentFilter}" />
+    <aura:handler name="ClearFilterPillEvent" event="c:ClearFilterPillEvent" action="{!c.handlePillClear}" />
+    
+	<!-- Aura Evemt registration -->
+    <aura:registerEvent name="fetchFilters" type="c:fetchFilters" />
+    <aura:registerEvent name="FilterTableEvent" type="c:FilterTableEvent" />
+    <aura:registerEvent name="resetFilterEvent" type="c:resetFilterEvent" />
+	
+    <div aura:id="menuDiv" class="slds slds-dropdown-trigger slds-dropdown-trigger--click" >
+        <div class="slds-grid slds-grid--pull-padded-medium">
+            <div class="slds-col slds-p-horizontal--medium">
+                <div class="slds-text-heading--small" style="padding-left:10PX;">{!v.consts.LBL_FILTER}</div>
+                <button class="slds-input__icon slds-input__icon--right slds-button slds-button--icon slds-input__icon--right" 
+                        onclick="{!c.showMenu}" title="Filter" style="padding-left:6PX;">
+                    <lightning:icon iconName="utility:filter" size="medium" class="slds-input__icon" 
+                                    alternativeText="Filter"/>
+                </button>
+            </div>
+            <div class="slds-col slds-p-horizontal--medium">
+                <div>{!v.filterPillFacet}</div>
+                <aura:if isTrue="{!v.currentPillList.length > 1}">
+                    <span> 
+                        <!-- <span aura:id="pillID" class="slds-pill">{!v.consts.LBL_CLEAR_ALL}</span>
+                        <button class="slds-button slds-buttonicon slds-pill__remove" title="Remove" onclick="{!c.clearAllFilters}">
+                            <lightning:icon iconName="utility:close" size="x-small" class="slds-input__icon" alternativeText="Remove" />
+                        </button> --><br></br>
+                        &nbsp;&nbsp;<lightning:button variant="brand" label="{!v.consts.LBL_CLEAR_ALL}" 
+                                          onclick="{!c.clearAllFilters}" />
+                        
+                    </span>
+                </aura:if>
+            </div>
+        </div><br></br>
+        <div id="dropDownDiv" aura-id="filterDropDownSection" 
+             class="slds-dropdown slds-dropdown--left slds-dropdown--small" >
+            <ul>
+                <li class="slds-dropdown__header" role="separator">
+                    <span class="slds-truncate slds-text-title--caps">{!v.consts.LBL_FILTER_BY}</span>
+                </li>
+                {!v.body}
+            </ul>
+            <div class="slds-box slds-box--x-small slds-theme--shade slds-grid slds-grid--align-center">
+                <lightning:button aura:id="doneFilterButton" variant="brand" label="{!v.doneLabel}" 
+                                  onclick="{!c.handleDone}" />
+            </div>
+        </div>
+    </div>
+    <div aura:id="errorMsgID" class="slds-hide">
+        <c:ErrorLabelComponent errorMsg="{!v.errorMsg}" />
+    </div>
+</aura:component>

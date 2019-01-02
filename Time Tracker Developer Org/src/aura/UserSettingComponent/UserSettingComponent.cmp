@@ -1,0 +1,136 @@
+<!--
+	@ Purpose : Displays the records of Profile/User Setting custom setting records ( Table View ).
+	@ Name	  : UserSettingComponent.cmp
+-->
+
+<aura:component controller="AdminPageComponentController">
+    
+    <!-- Aura Dependencies -->
+    <aura:dependency resource="markup://c:ToastComponent" />
+    <aura:dependency resource="markup://c:NewAndEditUserSettingForm" />
+    
+    <!-- Aura Attributes -->
+    <aura:attribute name="orgSetting" type="Object" />
+    <aura:attribute name="namespace" type="String"/>
+    <aura:attribute name="fieldNamesList" type="String[]" />
+    <aura:attribute name="customSetting" type="Object[]" />
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="recordToEdit" type="Object"/>
+    <aura:attribute name="consts" type="Object"/>
+    
+    <!-- Aura Event Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
+    <aura:handler event="c:setNamespaceEvent" action="{!c.loadNamespace}" />
+    <aura:handler name="refreshUserSettingTabEvent" action="{!c.refreshTab}" event="c.refreshUserSettingTabEvent" />
+    <aura:handler action="{!c.refreshTab}" event="c.RefreshUserSettingsTable"/>
+    
+    <c:ErrorLabelComponent aura:id="errorID"/>
+    {!v.body}
+    <div class="slds-grid slds-grid--align-center">
+        <lightning:button variant="brand" label="{!v.consts.LBL_NEW}" onclick="{! c.handleNew }" />
+    </div>
+    <br/><br/>
+	
+    <article class="slds-card slds-is-relative" >
+        <table class="slds-table slds-table_edit slds-table_bordered slds-table_resizable-cols slds-no-cell-focus slds-table--striped " 
+               role="grid">
+            <thead>
+                <!--Dynamic display of field labels as columns of table-->
+                <tr class="slds-text-title--caps slds-line-height_reset">
+                    <aura:iteration var="fieldName" items="{!v.fieldNamesList}">
+                        <th aura:id="colHeader" scope="col" class="slds-is-sortable slds-text-title_caps slds-has-focus">
+                            <div class="slds-th__action slds-text-link_reset" color-background="#f4f6f6" 
+                                 title="{!fieldName}">{!fieldName}</div>
+                        </th>
+                    </aura:iteration>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration aura:id="iterationID" var="setting" items="{!v.customSetting}" indexVar="index">
+                    <tr class="slds-hint-parent">
+                        <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid ">
+                                <a  href="javascript:void(0);" onclick="{!c.editRow}" data-recId="{!index}">
+                                    <strong>
+                                        {!v.consts.LBL_EDIT}
+                                    </strong>
+                                </a>
+                                &nbsp;|&nbsp;
+                                <a  href="javascript:void(0);" onclick="{!c.deleteRow}" data-recId="{!index}">
+                                    <strong>
+                                        {!v.consts.LBL_DEL}
+                                    </strong>
+                                </a>
+                            </span>
+                        </td>
+                        <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid--align-spread">
+                                <span class="slds-truncate" >{!setting.SetupOwner.Name}</span>
+                            </span>
+                        </td>
+                        <!--<td role="gridcell" class="slds_cell_edit">
+                            <span class="slds_grid slds-grid__align_spread">
+                                <span class="slds_truncate" >{!setting.ChromeExtensionID__c}</span>
+                            </span>
+                        </td> -->
+                        <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid--align-spread">
+                                <span class="slds-truncate" >{!setting.ClientDebugLevel__c}</span>                                
+                            </span>
+                        </td>
+                        <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid--align-spread">
+                                <span class="slds-truncate" >{!setting.Server_Debug_Level__c}</span>
+                            </span>
+                        </td>
+                        <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid__align-spread">
+                                <span class="slds-truncate" >{!setting.Max_Duration_In_Minutes__c}</span>
+                            </span>
+                        </td>
+                         <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid__align-spread">
+                                <span class="slds-truncate" >{!setting.Weekly_Hours__c}</span>
+                            </span>
+                        </td>
+						<!--
+                        <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid__align-spread">
+                                <span class="slds-truncate" >
+                                    <lightning:input type="checkbox" label=" " disabled="true"
+													 checked="{!setting.ClientFailureNotifications__c}" />
+                                </span>
+                            </span>
+                        </td>
+                        <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid__align-spread">
+                                <span class="slds-truncate" >
+                                    <lightning:input type="checkbox" label=" " checked="{!setting.Server_Debug__c}" 
+													 disabled="true"/>
+                                </span>
+                            </span>
+                        </td>
+						<td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid__align-spread">
+                                <span class="slds-truncate" >
+                                    <lightning:input type="checkbox" label=" " disabled="true"
+                                                     checked="{!setting.Is_Time_Tracker_Read_Only__c}" />
+                                </span>
+                            </span>
+                        </td>
+                        -->
+                        <!-- <td role="gridcell" class="slds-cell-edit">
+                            <span class="slds-grid slds-grid__align-spread">
+                                <span class="slds-truncate" >
+                                    <lightning:input type="checkbox" label=" "  disabled="true"
+													 checked="{!setting.StopTrackingAfterCloseCase__c}"/>
+                                </span>
+                            </span>
+                        </td> 
+						-->
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </article>
+</aura:component>

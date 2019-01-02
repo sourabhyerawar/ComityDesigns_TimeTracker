@@ -1,0 +1,153 @@
+<!--
+	@ Purpose : Displays form for new Profile/User Setting custom setting record.
+	@ Name	  : NewAndEditUserSettingForm.cmp
+-->
+
+<aura:component controller="AdminPageComponentController">
+    
+	<!-- Aura Attributes -->
+	<aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="modalHeader" type="String" />
+    <aura:attribute name="record" type="Object" />
+    <aura:attribute name="consts" type="Object"/>
+    <aura:attribute name="isNew" type="Boolean" />
+    <aura:attribute name="trackedEntity" type="String" default="User"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    
+    <aura:attribute name="recordToBeInserted" type="Object" 
+					default="{'SetupOwnerId' : '','ChromeExtensionID__c' : '','ClientDebugLevel__c' : '',
+					'Server_Debug_Level__c' : '', 'ClientFailureNotifications__c' : '', 
+					'Max_Duration_In_Minutes__c' : '','Server_Debug__c' : '',
+					'StartDayOfWeek__c' : '','Weekly_Hours__c' : ''}"/>
+					
+	<!-- Aura Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   
+    <!-- Aura Event Registration -->
+    <aura:registerEvent name="refreshUserSettingTabEvent" type="c:refreshUserSettingTabEvent" />
+    <aura:handler name="clearTypeAheadText" event="c:ClearTypeAheadTextEvent" 
+                  action="{!c.hideErrorMsg}"/>
+    
+    
+    <c:ErrorLabelComponent aura:id="errorID"/>
+    
+    <div tabindex="-1" aria-labelledby="header43" aura:id="modaldialog" role="dialog"
+		 class="slds-modal slds-fade-in-open slds-backdrop slds-modal--large"> 
+        <div class="slds-modal__container ">
+            <div class="slds-modal__header ">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse slds-notify__close" 
+						onclick="{!c.cancel}">
+                    <c:SVGIcon svgPath="/resource/SLDS214/assets/icons/action-sprite/svg/symbols.svg#close"
+                               class="slds-button__icon slds-button__icon--large" assistiveText="Close"/>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">{!v.modalHeader}</h2>
+            </div> 
+            
+            <div class="slds-modal__content slds-p-around--medium">
+                <div class="container slds-is-relative">
+                    
+                    <!--
+                    <div class="slds-hide" aura:id="spinnerDiv">
+                        <lightning:spinner variant="brand" size="small"/>
+                    </div>
+                    -->
+                    
+                    <!--Form to enter or edit user setting START-->
+                    <div class="slds-form slds-form_compound">
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-2">
+                                <lightning:select aura:id="LocationID" required="true" name="Location" 
+												  label="Location" value="{!v.trackedEntity}">
+                                    <option value="{!v.consts.USER}">{!v.consts.USER}</option>
+                                    <option value="{!v.consts.PROFILE}">{!v.consts.PROFILE}</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-form-element slds-size_1-of-2">
+                                <br/>
+                                <div aura:id="errorDiv" class="slds-form-element">
+                                    <c:SearchComponent aura:id="searchComponentID" trackedEntity="{!v.trackedEntity}" 
+													   searchInput="{!v.record.SetupOwner.Name}" 
+                                                       namespace="{!v.namespace}"/>
+                                    <div aura:id="error-message" 
+										 class="slds-form-element__help slds-hide slds-required">
+										{!v.consts.LBL_VALID_USERNAME}
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-2">
+                                <lightning:select aura:id="clientDebugLevelID" name="Client Debug Level" 
+												  label="Client Debug Level" 
+                                                  value="{!v.record.ClientDebugLevel__c}">
+                                    <option value="">{!v.consts.LBL_SELECT}</option>
+                                    <option value="FINEST">FINEST</option>
+                                    <option value="FINER">FINER</option>
+                                    <option value="FINE">FINE</option>
+                                    <option value="DEBUG">DEBUG</option>
+                                    <option value="INFO">INFO</option>
+                                    <option value="WARN">WARN</option>
+                                    <option value="ERROR">ERROR</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-form-element slds-size_1-of-2">
+                                <lightning:input aura:id="maxDurationID" type="number" 
+                                                 name="Max Duration Allowed In Minutes" 
+												 label="Max Duration Allowed In Minutes" max="999" min="0"
+												 value="{!v.record.Max_Duration_In_Minutes__c}"
+                                                 onblur="{!c.valueChangeValidationMaxDuration}"/>
+                            </div>
+                        </div>
+                        <div class="slds-form-element__row">
+                            <div class="slds-form-element slds-size_1-of-2">
+                                 <lightning:select aura:id="serverDebugLevelID" name="Server Debug Level" 
+												   label="Server Debug Level" 
+                                                   value="{!v.record.Server_Debug_Level__c}" >
+                                    <option value="">{!v.consts.LBL_SELECT}</option>
+                                    <option value="FINEST">FINEST</option>
+                                    <option value="FINER">FINER</option>
+                                    <option value="FINE">FINE</option>
+                                    <option value="DEBUG">DEBUG</option>
+                                    <option value="INFO">INFO</option>
+                                    <option value="WARN">WARN</option>
+                                    <option value="ERROR">ERROR</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-form-element slds-size_1-of-2">
+                                 <lightning:input aura:id="weeklyHrsID" type="number" name="Weekly Hours" 
+                                                  max="999" min="0"
+												  label="Weekly Hours" value="{!v.record.Weekly_Hours__c}"
+                                                  onblur="{!c.valueChangeValidationWeeklyHrs}"/>
+                            </div>
+                        </div>
+                        
+                        <lightning:input aura:id="serverDebugID" type="checkbox" label="Server Debug" 
+												 name="Server Debug" checked="{!v.record.Server_Debug__c}" />
+                        
+                        <lightning:input aura:id="clientFailID" type="checkbox" 
+                                                 name="Client Failure Notifications"
+                                                 label="Client Failure Notifications" 
+                                                 checked="{!v.record.ClientFailureNotifications__c}" />
+                        
+                        <lightning:input aura:id="tsro" type="checkbox" label="TimeSpent ReadOnly" 
+                                                 name="TimeSpent ReadOnly" 
+                                                 checked="{!v.record.Is_Time_Tracker_Read_Only__c}" />
+                        
+                        <div class="slds-form-element__row">
+                            <div class="form-footer">
+                                <div class="slds-grid slds-grid--vertical-align-end slds-grid--align-center">
+                                    <lightning:button aura:id="saveButtonID" variant="brand" label="Save" 
+													  onclick="{! c.handleSave }"/>
+                                    <lightning:button aura:id="cancelButtonID" variant="brand" label="Cancel" 
+													  onclick="{! c.cancel}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Form to enter or edit user setting END-->
+                </div>
+            </div>
+        </div>
+        <div aura:id="lockUI" class="slds-backdrop--hide" />
+    </div>
+</aura:component>

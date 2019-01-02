@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ChatterTypingInterval__c</fullName>
+        <description>It is used in chatter action tracking. If user is not typing in chatter text since X seconds then we ll close related chatter action. This X seconds is retrieved from this field.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Seconds</inlineHelpText>
+        <label>Chatter Typing Interval ( Seconds )</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ChromeExtensionID__c</fullName>
+        <externalId>false</externalId>
+        <label>Chrome Extension ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ClientDebugLevel__c</fullName>
+        <externalId>false</externalId>
+        <label>Client Debug Level</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ClientFailureNotifications__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Client Failure Notifications</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Time_Tracker_Read_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Time Tracker Read Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Max_Duration_In_Minutes__c</fullName>
+        <externalId>false</externalId>
+        <label>Tracking Timeout ( Minutes )</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Server_Debug_Level__c</fullName>
+        <description>Sets the debug level for the log records</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Add one of the following values: FINEST, FINER, FINE, DEBUG, INFO, WARN, ERROR</inlineHelpText>
+        <label>Server Debug Level</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Server_Debug__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Server Debug</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>StartDayOfWeek__c</fullName>
+        <description>Sunday
+Monday
+Tuesday
+Wednesday
+Thursday
+Friday
+Saturday</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sunday
+Monday
+Tuesday
+Wednesday
+Thursday
+Friday
+Saturday</inlineHelpText>
+        <label>StartDayOfWeek</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>StopTrackingAfterCloseCase__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This field will stop tracking case related activities after the case is closed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will stop tracking case related activities after the case is closed.</inlineHelpText>
+        <label>StopTrackingAfterCloseCase</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Weekly_Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>Weekly Hours</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Time Tracker User Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

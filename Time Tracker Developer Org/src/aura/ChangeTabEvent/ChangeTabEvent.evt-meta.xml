@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>41.0</apiVersion>
+    <description>For the time being, Whenever, Custom Settings are saved from first sub-tab ( without verifying ) then First main tab i.e. Config Settings must be displayed.</description>
+</AuraDefinitionBundle>

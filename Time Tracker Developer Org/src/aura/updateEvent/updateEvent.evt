@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="setting" type="TimeTrackerConfigSettings__c" />
+    <aura:attribute name="field" type="object" />
+    <aura:attribute name="fieldAPIName" type="String" />
+    <aura:attribute name="fieldValue" type="String" />
+</aura:event>

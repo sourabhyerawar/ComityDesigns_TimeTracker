@@ -1,0 +1,68 @@
+<!--
+	@ Purpose : 1. Displays new form of ConfigSetting when entity type is selected from 'Track New Activities' tab.
+				2. Displays records to be verified when clicked on verify button of this new form.
+				3. Loads ConfigSettingRecord compoent when record is selected/edited from verify tab.
+	@ Name	  : ConfigSettingProgress.cmp
+-->
+
+<aura:component controller="AdminPageComponentController">
+
+	<!-- Dependencies -->
+	<aura:dependency resource="markup://c:ConfigSettingsNewEntryForm" />
+	<aura:dependency resource="markup://c:ConfigSettingRecord"/>
+
+	<!-- Attributes -->
+	<aura:attribute name="tablabel" type="String"/>
+	<aura:attribute name="consts" type="Object"/>
+	<aura:attribute name="selectedTabId" type="String" default="enterdetails" />
+	<aura:attribute name="settings" type="String"/>
+	<aura:attribute name="csMetadata" type="String"/>
+	<aura:attribute name="verifyTabLable" type="String" default=""/>
+	<aura:attribute name="newActivityCsList" type="Object[]" default="[]"/>
+	<aura:attribute name="namespace" type="String" default=""/>
+    
+	<!-- Event Handlers -->
+	<aura:handler name="init" value="{!this}" action="{!c.initializeComponent}" />
+	<aura:handler event="c:PassNewlyCreatedSettingsToConfigSettingProgress" action="{!c.getnewActivityCsList}"/>
+	<aura:handler event="c:ResetNewEntryFormEvent" action="{!c.resetNewEntryForm}"/>
+	<aura:handler name="updateSettingsInProgressComponent" event="c:updateSettingsInProgressComponent" 
+                  action="{!c.updateNewActivitiyCsList}" includeFacets="true" phase="bubble"/>
+    
+	<lightning:tabset aura:id="progresstabset" selectedTabId="{!v.selectedTabId}">
+		<lightning:tab label="{!'Enter '+v.tablabel+' Details'}" id="enterdetails">
+            <c:ConfigSettingsNewEntryForm settings="{!v.settings}" trackedEntity="{!v.tablabel}"
+                                          namespace="{!v.namespace}"/>
+        </lightning:tab>
+		<aura:if isTrue="{! v.verifyTabLable != '' }">
+			<lightning:tab label="{!v.verifyTabLable}" id="verifydetails">
+				<div class="slds-grid slds-wrap slds-grid--pull-padded">
+					<div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+						<div class="slds-grid slds-grid--vertical slds-navigation-list--vertical">
+							<ol>
+								<aura:iteration items="{!v.newActivityCsList}" var="cs" indexVar="index">
+									<li class="slds-is-active">
+										<a href="javascript:void(0);" onclick="{!c.loadComponent}" 
+                                           aria-describedby="entity-header"
+                                           class="slds-navigation-list--vertical__action slds-text-link--reset" 
+                                           data-index="{!index}">{!(index+1) + '. '+cs.Name}</a>
+									</li>
+								</aura:iteration>
+							</ol>
+                            <div class="slds-form-element__row">
+                                <div class="form-footer">
+                                    <div class="slds-grid slds-grid--vertical-align-end slds-grid--align-center">
+                                        <lightning:button label="{!v.consts.LBL_SAVE_ALL}" onclick="{!c.handleSaveCS}" 
+                                                          variant="brand" class="slds-m-top--medium"/>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+					<div class="slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--2-of-3">
+                        {!v.body}
+                    </div>
+				</div>
+			</lightning:tab>
+		</aura:if>
+    </lightning:tabset>
+</aura:component>

@@ -1,0 +1,155 @@
+<!--
+	@ Purpose : 1. Outermost lightning Component which is being used on AdminCustomSettingPage.
+				2. Displays 3 tabs such as Configuration Settings, User Settings, Track New Activities
+				3. Displays the initial/home view of each tab.
+	@ Name	  : AdminPageComponent.cmp
+-->
+<aura:component access="global" controller="AdminPageComponentController" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome">
+    
+    <!-- Dependencies -->
+    <!-- <aura:dependency resource="markup://c:ModalPopUp" /> -->
+    <aura:dependency resource="markup://c:ToastComponent" />
+    <aura:dependency resource="markup://c:ConfigSettingDetailsComponent" />
+    <aura:dependency resource="markup://c:FilterMenu" />
+
+    <!-- Attributes -->
+    <aura:attribute name="rowColIndexSet" type="Set" default="[]"/>
+    <aura:attribute name="settings" type="String" />
+    <aura:attribute name="consts" type="Object" />
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <aura:attribute name="isSaveDisabled" type="Boolean" default="true"/>
+    <aura:attribute name="isNameFieldEmpty" type="Boolean"/>
+    <aura:attribute name="customSettingMetadata" type="String"/>
+    <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="toastMSG" type="String"/>
+    <aura:attribute name="toastTitle" type="String"/>
+    <aura:attribute name="toastType" type="String"/>
+    <aura:attribute name="toastComponent" type="Aura.Component"/>
+    <aura:attribute name="compArray" type="Aura.Component[]"/>
+    <aura:attribute name="configSettingsTableComponent" type="Aura.Component[]"/>
+    <aura:attribute name="saveMessageComponent" type="Aura.Component[]"/>
+    <aura:attribute name="filterFacet" type="Aura.Component[]"/>
+    <aura:attribute name="orgSetting" type="Object"/>
+    <aura:attribute name="saveButtonLabel" type="String" default="Save"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="selectedTabid" type="String"/>
+    <aura:attribute name="counter" type="Integer" default="0"/>
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="passRowColIndexEvt" event="c:passRowColIndexEvt" action="{!c.addRowColIndex}"/>
+    <aura:handler event="c:onEditToggleEvent" action="{!c.handleToggleEvent}"/>
+    <aura:handler event="c:afterSaveRefresh" action="{!c.handleAfterSaveRefresh}"/>
+    <aura:handler name="createFilter" event="c:createFilter" action="{!c.createFilterComponent}"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:handler event="c:sendOrgSettingEvent" action="{!c.setOrgSettinngRecord}"/>
+	<aura:handler event="c:ChangeTabEvent" action="{!c.changeTabId}"/>
+    
+    <!-- Event Registration -->
+    <aura:registerEvent name="saveClickEvent" type="c:saveClickEvent"/>
+    <aura:registerEvent name="callServerEvent" type="c:callServerEvent"/>
+    <aura:registerEvent name="setNamespaceEvent" type="c.setNamespaceEvent"/>
+    <aura:registerEvent name="refreshUserSettingsTable" type="c:RefreshUserSettingsTable"/>
+    <!--<aura:registerEvent name="CloseFilterModelEvt" type="c:CloseFilterModelEvent"/> -->
+    
+    <div id="mainCompId" class="slds" >
+        <div aura:id="errorMsgID" class="slds-hide">
+            <c:ErrorLabelComponent errorMsg="{!v.errorMsg}" />
+        </div>
+        <aura:if isTrue="{!v.spinner}">
+            <lightning:spinner alternativeText="Loading..." variant="brand" size="large" />
+        </aura:if>
+        <div aura:id="savemesage">{!v.saveMessageComponent}</div>
+
+        <lightning:tabset selectedTabId="{!v.selectedTabid}">
+            <!--Config Settings Tab-->
+            <lightning:tab label="{!v.consts.LBL_CONFIGURATION_SETTINGS}" id="tab1">
+                <div id="configSettingsTab" aura:id="configSettingsTabData" 
+                     class="slds-tabs--default__content slds-show" role="tabpanel" 
+                     aria-labelledby="tab-default-2__item">
+                    <div class="slds-box">
+                        <lightning:select aura:id="customsettingtype" name="View" 
+                                          label="{!v.consts.LBL_VIEW_CUSTOM_SETTING_TYPE}" 
+                                          onchange="{!c.getCustomSettingsByType}">
+                            <option value="{!v.consts.LBL_SELECT}">{!v.consts.LBL_SELECT}</option>
+                            <option value="{!v.consts.LBL_CUSTOM_EVENT}">{!v.consts.LBL_CUSTOM_EVENT}</option>
+                            <option value="{!v.consts.LBL_MANUAL}">{!v.consts.LBL_MANUAL}</option>
+                            <option value="{!v.consts.LBL_OBJECT}">{!v.consts.LBL_OBJECT}</option>
+                            <option value="{!v.consts.LBL_STRATEGY}">{!v.consts.LBL_STRATEGY}</option>
+                            <option value="{!v.consts.LBL_URLPATTERN}">{!v.consts.LBL_URLPATTERN}</option>
+                        </lightning:select>
+                        <br/>
+                        <lightning:select aura:id="strategysettingtype" name="View" label="Strategy Setting Type" 
+                                          onchange="{!c.getStrategySettingsByType}" class="slds-hide">
+                            <option value="{!v.consts.LBL_SELECT}">{!v.consts.LBL_SELECT}</option>
+                            <option value="{!v.consts.LBL_LIST_VIEW_STRATEGIES}">{!v.consts.LBL_LIST_VIEW_STRATEGIES}</option>
+                            <option value="{!v.consts.LBL_OBJECT_REVIEW_STRATEGIES}">{!v.consts.LBL_OBJECT_REVIEW_STRATEGIES}</option>
+                            <option value="{!v.consts.LBL_NEW_OBJECT_STRATEGIES}">{!v.consts.LBL_NEW_OBJECT_STRATEGIES}</option>
+                            <option value="{!v.consts.LBL_EDIT_OBJECT_STRATEGIES}">{!v.consts.LBL_EDIT_OBJECT_STRATEGIES}</option>
+                            <option value="{!v.consts.LBL_OTHER_STRATEGIES}">{!v.consts.LBL_OTHER_STRATEGIES}</option>
+                        </lightning:select>
+                    </div>
+                    <br/>
+                    <div class="slds-grid">
+                        <div class="slds-p-horizontal__small slds-size__1-of-2 slds-medium-size__1-of-6 slds-large-size__8-of-12">
+                            {!v.filterFacet}
+                        </div>
+                        <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--5-of-6 slds-large-size--8-of-12 ">
+                            <div aura:id="saveButtonID" class="slds-hide">
+                                <div class="inlineEditButtonBlock">
+                                    <lightning:button class="inlineEditSaveBtn" variant="brand" 
+                                                      label="{!v.saveButtonLabel}" 
+                                                      onclick="{! c.handleSave }" disabled="{!v.isSaveDisabled}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div aura:id="configsettingstable">{!v.configSettingsTableComponent}</div>
+                </div>
+            </lightning:tab>
+
+            <!--User Settings Tab-->
+            <lightning:tab onactive="{!c.handleUserSettingTabActive}" label="{!v.consts.LBL_USER_SETTINGS}" id="tab2">
+                <lightning:tabset >
+                    <lightning:tab label="{!v.consts.LBL_ORG_LEVEL_VAL}">
+                        <c:OrgSettingComponent />
+                    </lightning:tab>
+                    <lightning:tab label="{!v.consts.LBL_USER_LEVEL_SETTINGS}">
+                        <c:UserSettingComponent orgSetting="{!v.orgSetting}"/>
+                    </lightning:tab>
+                </lightning:tabset>
+            </lightning:tab>
+
+            <!--Track New Activities Tab-->
+            <lightning:tab onactive="{!c.handleTrackNewTabActive }" label="{!v.consts.LBL_TRACK_NEW_ACTIVITIES}" 
+                           id="tab3">
+                <ul class="slds-has-dividers--bottom-space">
+                    <li class="slds-item">
+                        <h3 class="slds-text-title">{!v.consts.LBL_START_TRACKING_NEW_ENTITY}
+                            <lightning:buttonIcon aura:id="helpText" variant="bare" iconName="utility:info" 
+                                                  size="small" onclick="{!c.toggleHelpTtext}" 
+                                                  onblur="{!c.hideHelpText}"/>
+                            <div aura:id= "helpTextDiv" 
+                                 class="slds-hide slds-popover slds-popover--tooltip slds-nubbin--left-bottom" 
+                                 role="tooltip" id="help" style="position:absolute;top:30px;left:235px;">
+                                <div class="slds-popover__body">{!v.consts.LBL_STRART_TRACKING_HELP}</div>
+                            </div>
+                        </h3>
+                        <div>
+                            <lightning:select aura:id="tracknewactivity" name="" 
+                                              label="  " onchange="{!c.handleActivityChange}" >
+                                <option value="{!v.consts.LBL_SELECT}">{!v.consts.LBL_SELECT}</option>
+                                <option value="{!v.consts.LBL_CUSTOM_EVENTS}">{!v.consts.LBL_CUSTOM_EVENTS}</option>
+                                <option value="{!v.consts.LBL_MANUAL_ACTIVITY}">{!v.consts.LBL_MANUAL_ACTIVITY}</option>
+                                <option value="{!v.consts.LBL_URL_VF_PAGE}">{!v.consts.LBL_URL_VF_PAGE}</option>
+                            </lightning:select>
+                        </div>
+                    </li>
+                </ul>  
+                {!v.body}
+            </lightning:tab>
+        </lightning:tabset>
+    </div>
+</aura:component>

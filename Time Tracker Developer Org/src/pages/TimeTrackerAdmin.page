@@ -1,0 +1,26 @@
+<apex:page title="Time Tracker Admin" sidebar="FALSE">
+    
+    <apex:includeScript value="/resource/SLDS214/assets/js/LightningOut.js"/>
+    <apex:stylesheet value="/resource/SLDS214/assets/styles/salesforce-lightning-design-system-ltng.css"/>
+    
+    <apex:includeLightning />
+        <div class="slds">
+            <div id="LoadingvfDIV" class="slds-spinner_container" align="center" >
+                <div class="slds-spinner--brand slds-spinner slds-spinner--small" role="alert">
+                    <h1>Loading</h1>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                 </div>
+            </div>  
+        </div>
+    <div id="lightning" />
+    <script>
+    $Lightning.use("c:AdminPageApplication", function() {
+        $Lightning.createComponent("c:AdminPageComponent", {}, "lightning",  function(cmp) {
+           //do something
+           var loadingDivElt = document.getElementById("LoadingvfDIV");
+           loadingDivElt.style.display = 'none' ;
+       });
+    });
+    </script>
+</apex:page>

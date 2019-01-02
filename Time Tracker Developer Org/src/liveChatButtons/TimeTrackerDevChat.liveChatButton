@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LiveChatButton xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chatPage>TimeTrackerDevWaitForChat</chatPage>
+    <deployments/>
+    <enableQueue>true</enableQueue>
+    <isActive>true</isActive>
+    <label>TimeTrackerDevChat</label>
+    <offlineImage>Chat_Offline</offlineImage>
+    <onlineImage>Chat_Online</onlineImage>
+    <optionsCustomRoutingIsEnabled>false</optionsCustomRoutingIsEnabled>
+    <optionsHasChasitorIdleTimeout>false</optionsHasChasitorIdleTimeout>
+    <optionsHasInviteAfterAccept>false</optionsHasInviteAfterAccept>
+    <optionsHasInviteAfterReject>false</optionsHasInviteAfterReject>
+    <optionsHasRerouteDeclinedRequest>true</optionsHasRerouteDeclinedRequest>
+    <optionsIsAutoAccept>false</optionsIsAutoAccept>
+    <optionsIsInviteAutoRemove>false</optionsIsInviteAutoRemove>
+    <overallQueueLength>3</overallQueueLength>
+    <preChatFormPage>TimeTrackerPreChatForm</preChatFormPage>
+    <pushTimeOut>20</pushTimeOut>
+    <routingType>MostAvailable</routingType>
+    <site>TimeTrackerLiveAgent</site>
+    <skills>
+        <skill>TimeTrackerDevSkill</skill>
+    </skills>
+    <type>Standard</type>
+    <windowLanguage>en_US</windowLanguage>
+</LiveChatButton>

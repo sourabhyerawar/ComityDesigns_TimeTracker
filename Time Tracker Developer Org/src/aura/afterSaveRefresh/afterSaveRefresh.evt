@@ -1,0 +1,8 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="toastMSG" type="String"/>
+    <aura:attribute name="toastTitle" type="String"/>
+    <aura:attribute name="toastType" type="String"/>
+    <aura:attribute name="isNewEntry" type="Boolean"/>
+    <aura:attribute name="updatedSettings" type="Object[]"/>
+    <aura:attribute name="deletedSetting" type="Object"/>
+</aura:event>

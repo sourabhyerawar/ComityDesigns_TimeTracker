@@ -1,0 +1,44 @@
+<!--
+	@ Purpose : 1. Displays the ConfigSetting record when edited the table row from 'Configuration Settings' tab.
+				2. Loads the 'ConfigSettingRecord' component to display the record in edit mode in modal.
+	@ Name	  : ConfigSettingRecordModal.cmp
+-->
+
+<aura:component >
+	
+	<!-- Dependencies -->
+	<aura:dependency resource="markup://c:ConfigSettingRecord" />
+
+	<!-- Attributes -->
+	<aura:attribute name="csMetadata" type="Object"/>
+	<aura:attribute name="consts" type="Object"/>
+	<aura:attribute name="setting" type="Object"/>
+	<aura:attribute name="namespace" type="string"/>
+	<aura:attribute name="isEdit" type="boolean" default="false"/>
+
+	<!-- Event Handlers -->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:handler name="closeConfigSettingRecordModal" event="c:closeConfigSettingRecordModal" 
+                  action="{!c.closeCSRecordModal}" />
+
+	<div class="demo-only" style="height: 640px; width:800px">
+	  <div role="dialog" aura:id="modaldialog" tabindex="-1" aria-labelledby="header43" 
+           class="slds-modal slds-fade-in-open slds-modal--large" style="display:block;">
+	    <div class="slds-modal__container">
+	      <header class="slds-modal__header">
+	        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeModal}">
+	          <c:SVGIcon svgPath="/resource/SLDS214/assets/icons/action-sprite/svg/symbols.svg#close"
+                               class="slds-button__icon slds-button__icon--large" assistiveText="Close"/>
+	          <span class="slds-assistive-text">{!v.consts.LBL_CLOSE}</span>
+	        </button>
+	        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.consts.LBL_EDIT_CS}</h2>
+	      </header>
+	      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+	      	{!v.body}
+	        <!-- <c:ConfigSettingRecord configsetting="{!setting}" namespace="{!namespace}" configsettingmetadata="{!csMetadata}"/> -->
+	      </div>
+	    </div>
+	  </div>
+	  <div aura:id="dialogbackdrop" class="slds-backdrop slds-backdrop--open" style="display:block;"></div>
+	</div>
+</aura:component>

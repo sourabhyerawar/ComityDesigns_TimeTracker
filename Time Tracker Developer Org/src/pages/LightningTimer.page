@@ -1,0 +1,44 @@
+<!--
+    @ Purpose   : 1. Placed as a footer component in Lightning Service Console App.
+                  2. Holds the Lightning TimeTrackerApp.app to track the time in lightning console app.
+    @ Page Name : LightningTimer
+-->
+<apex:page standardStylesheets="FALSE" sidebar="FALSE" showHeader="FALSE" title="Lightning Timer">
+
+    <head>
+        <apex:includeScript value="/resource/TimeTracker/js/jQuery321.js"/>
+    </head>
+    
+    <body> 
+     
+        <script type="text/javaScript">
+            
+            document.addEventListener("hello", function(data) {
+                console.log( 'LightningTimer Page Script' );
+                setTimeout(function() {
+                    console.log( 'forceactionbuttons-length',$('.forceActionButton').length);
+                    $('.forceActionButton').each( (i, ele) => {
+                        if (ele.title === 'Cancel' ) {
+                            $(ele).on('click', (e) => {
+                                console.log( 'clicked on cancel button');
+                                alert('cancel clicked');
+                            });
+                        }
+                    });
+                },3000);
+            });
+            
+            $(document).ready( function() {
+                
+                console.log( 'Lightning Timer page is loaded' );
+            });
+            
+        /*sforce.console.addEventListener( "hello",  function( data ) {
+                console.log( 'sforce.console.addEventListener - LightningTimer Page Script',data );
+            });*/
+            
+        </script>
+    
+    </body>
+    
+</apex:page>

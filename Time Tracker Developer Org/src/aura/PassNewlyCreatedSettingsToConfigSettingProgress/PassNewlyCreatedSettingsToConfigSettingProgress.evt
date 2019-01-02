@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template" >
+	
+    <aura:attribute name="newlyCreatedList" type="Object[]" />
+    <aura:attribute name="showVerifySettingsTab" type="BOOLEAN"></aura:attribute>
+    
+</aura:event>

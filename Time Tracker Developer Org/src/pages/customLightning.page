@@ -1,0 +1,6 @@
+<apex:page standardController="Employee__c" >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  Custom VF page to track in lightning
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

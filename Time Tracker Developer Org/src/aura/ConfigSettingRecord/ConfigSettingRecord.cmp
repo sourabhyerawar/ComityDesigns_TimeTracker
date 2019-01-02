@@ -1,0 +1,214 @@
+<!--
+	@ Purpose : 1. Displays ConfigSetting record ( read or edit mode ) when selected from verify Tab.
+				2. Displays ConfigSetting record when edited the table row from 'Configuration Settings' tab.
+	@ Name    : ConfigSettingRecord.cmp
+-->
+
+<aura:component controller="AdminPageComponentController" 
+				implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" 
+                access="global">
+    
+    <!-- Define Attribute-->
+    <aura:attribute name="configsettingmetadata" type="Object"/>
+    <aura:attribute name="consts" type="Object"/>
+    <aura:attribute name="originalCsList" type="Object[]"/>
+    <aura:attribute name="isModal" type="Boolean" default="FALSE"/>
+    <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="formheader" type="String" default="Please verify configuration setting information."/>
+    <aura:attribute name="csfield" type="Object"/>
+    <aura:attribute name="verifiySettingsListIndex" type="Integer" default="0"/>
+    
+    <aura:attribute name="showText5Field" type="Boolean" default="TRUE"/>
+    <aura:attribute name="showText6Field" type="Boolean" default="TRUE"/>
+    <aura:attribute name="showText7Field" type="Boolean" default="TRUE"/>
+    <aura:attribute name="showText8Field" type="Boolean" default="TRUE"/>
+    
+    <aura:attribute name="lastSavedConfigSettingJson" type="String" default=""/>
+    <aura:attribute name="configsetting" type="Object" 
+    	default="{	'Text1__c': '',
+	                'Text2__c': '',
+	                'Text3__c': '',
+	                'Code1__c': '', 
+	                'Code2__c': '',
+                    'Id' : ''
+                   }"/>
+    <aura:attribute name="editMode" type="BOOLEAN" default="FALSE"/>
+    
+    <!-- Event Registration -->
+    <aura:registerEvent name="afterSaveRefresh" type="c:afterSaveRefresh" />
+    <aura:registerEvent name="closeConfigSettingRecordModal" type="c:closeConfigSettingRecordModal" />
+    <aura:registerEvent name="updateSettingsInProgressComponent" type="c:updateSettingsInProgressComponent"/>
+
+    <!-- Aura Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.loadConfigSettingAndMetadata}" />
+
+    <div>
+        <lightning:spinner alternativeText="Loading..." aura:id="spinnerDiv" 
+                           class="slds-hide" variant="brand" 
+                           size="small"/>
+        
+        <aura:if isTrue="{!!v.isModal}">
+            <div class="slds-page-header" role="banner" aura:id="pageheader">
+                <p aura:id="pageHeaderMessage" class="slds-text-heading--label"><b>{!v.formheader}</b></p>
+            </div>
+        </aura:if>
+
+		<div class="slds-form slds-form_compound">
+			<div class="slds-form-element__row">
+				<aura:if isTrue="{!v.csfield.Name.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="nameFieldId">
+						<lightning:input name="" label="{!v.csfield.Name.labelName}" 
+                                         value="{!v.configsetting.Name}" disabled="{!!v.editMode}" 
+                                         placeholder="{!v.csfield.Name.placeHolder}"/>
+					</div>
+				</aura:if>
+				<aura:if isTrue="{!v.csfield.Type__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="typeFieldId">
+						<lightning:input name="" label="{!v.csfield.Type__c.labelName}" 
+                                         value="{!v.configsetting.Type__c}" disabled="true" 
+                                         placeholder="{!v.csfield.Type__c.placeHolder}"/>
+					</div>
+				</aura:if>
+			</div>
+			<div class="slds-form-element__row">
+				<aura:if isTrue="{!v.csfield.Code1__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="code1FieldId">
+						<lightning:input name="" label="{!v.csfield.Code1__c.labelName}" 
+                                         placeholder="{!v.csfield.Code1__c.placeHolder}"
+										 value="{!v.configsetting.Code1__c}" disabled="{!!v.editMode}" />
+					</div>
+				</aura:if>
+				<aura:if isTrue="{!v.csfield.Text1__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="text1FieldId">
+						<lightning:input name="" label="{!v.csfield.Text1__c.labelName}" 
+                                         placeholder="{!v.csfield.Text1__c.placeHolder}"
+										 value="{!v.configsetting.Text1__c}" disabled="{!!v.editMode}" />
+					</div>
+				</aura:if>
+			</div>
+			<div class="slds-form-element__row">
+				<aura:if isTrue="{!v.csfield.Text2__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="text2FieldId">
+						<lightning:input name="" label="{!v.csfield.Text2__c.labelName}" 
+                                         placeholder="{!v.csfield.Text2__c.placeHolder}" required="false"
+										 value="{!v.configsetting.Text2__c}" disabled="{!!v.editMode}" />
+					</div>
+				</aura:if>
+				<aura:if isTrue="{!v.csfield.Text3__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="text3FieldId">
+						<lightning:input name="" label="{!v.csfield.Text3__c.labelName}" 
+                                         placeholder="{!v.csfield.Text3__c.placeHolder}"
+										 value="{!v.configsetting.Text3__c}" disabled="{!!v.editMode}" />
+					</div>
+				</aura:if>
+			</div>
+			<div class="slds-form-element__row">
+				<aura:if isTrue="{!v.csfield.Code2__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="code2FieldId">
+						<lightning:input name="" label="{!v.csfield.Code2__c.labelName}" 
+                                         placeholder="{!v.csfield.Code2__c.placeHolder}"
+										 value="{!v.configsetting.Code2__c}" disabled="{!!v.editMode}"/>
+					</div>
+				</aura:if>
+				<aura:if isTrue="{!v.csfield.Text4__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="text4FieldId">
+						<lightning:input name="" label="{!v.csfield.Text4__c.labelName}" 
+                                         placeholder="{!v.csfield.Text4__c.placeHolder}"
+										 value="{!v.configsetting.Text4__c}" disabled="{!!v.editMode}" />
+					</div>
+				</aura:if>
+			</div>
+            <aura:if isTrue="{!or(v.showText5Field,v.showText6Field)}">
+                <div class="slds-form-element__row">
+                    <aura:if isTrue="{!and(v.csfield.Text5__c.used,v.showText5Field)}">
+                        <div class="slds-form-element slds-size_1-of-2">
+                            <lightning:input aura:id="text5FieldId" name="" label="{!v.csfield.Text5__c.labelName}" 
+                                             placeholder="{!v.csfield.Text5__c.placeHolder}"
+                                             value="{!v.configsetting.Text5__c}" disabled="{!!v.editMode}" />
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!and(v.csfield.Text6__c.used,v.showText6Field)}">
+                        <div class="slds-form-element slds-size_1-of-2" aura:id="text6FieldId">
+                            <lightning:input name="" label="{!v.csfield.Text6__c.labelName}" 
+                                             placeholder="{!v.csfield.Text6__c.placeHolder}"
+                                             value="{!v.configsetting.Text6__c}" disabled="{!!v.editMode}" />
+                        </div>
+                    </aura:if>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!or(v.showText7Field,v.showText8Field)}">
+                <div class="slds-form-element__row">
+                    <aura:if isTrue="{!and(v.csfield.Text7__c.used,v.showText7Field)}">
+                        <div class="slds-form-element slds-size_1-of-2" aura:id="text7FieldId">
+                            <lightning:input name="" label="{!v.csfield.Text7__c.labelName}" 
+                                             placeholder="{!v.csfield.Text7__c.placeHolder}"
+                                             value="{!v.configsetting.Text7__c}" disabled="{!!v.editMode}" />
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!and(v.csfield.Text8__c.used,v.showText8Field)}">
+                        <div class="slds-form-element slds-size_1-of-2" aura:id="text8FieldId">
+                            <lightning:input name="" label="{!v.csfield.Text8__c.labelName}" 
+                                             placeholder="{!v.csfield.Text8__c.placeHolder}"
+                                             value="{!v.configsetting.Text8__c}" disabled="{!!v.editMode}" />
+                        </div>
+                    </aura:if>
+                </div>
+            </aura:if>
+			<div class="slds-form-element__row">
+				<aura:if isTrue="{!v.csfield.Flag1__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="flag1FieldId">
+						<lightning:input name="" label="{!v.csfield.Flag1__c.labelName}" 
+                                         type="checkbox"
+										 checked="{!v.configsetting.Flag1__c}" disabled="{!!v.editMode}" />
+					</div>
+				</aura:if>
+				<aura:if isTrue="{!v.csfield.Flag2__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="flag2FieldId">
+						<lightning:input name="" label="{!v.csfield.Flag2__c.labelName}" 
+                                         type="checkbox"
+										 checked="{!v.configsetting.Flag2__c}" disabled="{!!v.editMode}" />
+					</div>
+				</aura:if>
+			</div>
+			<div class="slds-form-element__row">
+                <aura:if isTrue="{!v.csfield.Flag3__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="flag3FieldId">
+						<lightning:input name="" label="{!v.csfield.Flag3__c.labelName}" 
+                                         type="checkbox" 
+										 checked="{!v.configsetting.Flag3__c}" disabled="{!!v.editMode}" />
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.csfield.Flag4__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="flag4FieldId">
+						<lightning:input name="" label="{!v.csfield.Flag4__c.labelName}" 
+                                         type="checkbox"
+									     checked="{!v.configsetting.Flag4__c}" disabled="{!!v.editMode}" />
+					</div>
+                </aura:if>
+			</div>
+			<div class="slds-form-element__row">
+                <aura:if isTrue="{!v.csfield.IsActive__c.used}">
+					<div class="slds-form-element slds-size_1-of-2" aura:id="isActiveFieldId">
+						<lightning:input type="checkbox" name="" 
+                                         label="{!v.csfield.IsActive__c.labelName}"
+										 checked="{!v.configsetting.IsActive__c}" disabled="{!!v.editMode}" />
+					</div>
+                </aura:if>
+			</div>
+			<div class="slds-form-element__row">
+                <div class="form-footer">
+                    <div class="slds-grid slds-grid--vertical-align-end slds-grid--align-center">
+                    	<aura:if isTrue="{!!v.isModal}">
+                        	<lightning:button label="{!v.consts.LBL_EDIT_BTN}" onclick="{!c.handleEditCS}" 
+                                              variant="brand" class="slds-m-top--medium" disabled="{!v.editMode}"/>
+                        </aura:if>
+						<lightning:button label="{!v.consts.LBL_SAVE_BTN}" onclick="{!c.handleSaveCS}" 
+                                          variant="brand" class="slds-m-top--medium" disabled="{!!v.editMode}"/>
+						<lightning:button label="{!v.consts.LBL_CANCEL_BTN}" onclick="{!c.handleCancelCS}" 
+                                          variant="brand" class="slds-m-top__medium" disabled="{!!v.editMode}"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</aura:component>

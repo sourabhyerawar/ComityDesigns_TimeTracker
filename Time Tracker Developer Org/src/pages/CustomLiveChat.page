@@ -1,0 +1,16 @@
+<apex:page sidebar="false">
+  <script type='text/javascript' src='https://c.la4-c1-was.salesforceliveagent.com/content/g/js/37.0/deployment.js'></script>
+  <script type='text/javascript'>
+     liveagent.init('https://d.la4-c1-was.salesforceliveagent.com/chat', '572360000000Lso', '00D36000001FB0u');
+  </script>
+  <div> Live Agent Chat Button</div>
+  <div>
+     <img id="liveagent_button_online_573360000000NGU" style="display: none; border: 0px none; cursor: pointer" onclick="liveagent.startChat('573360000000NGU')" src="https://timetrackerdev-developer-edition.na30.force.com/resource/1467800817000/Chat_Online" /><img id="liveagent_button_offline_573360000000NGU" style="display: none; border: 0px none; " src="https://timetrackerdev-developer-edition.na30.force.com/resource/1469147670000/Chat_Offline" />
+     <script type="text/javascript">
+        if (!window._laq) { window._laq = []; }
+        window._laq.push(function(){liveagent.showWhenOnline('573360000000NGU', document.getElementById('liveagent_button_online_573360000000NGU'));
+        liveagent.showWhenOffline('573360000000NGU', document.getElementById('liveagent_button_offline_573360000000NGU'));
+        });
+     </script>
+  </div>
+</apex:page>

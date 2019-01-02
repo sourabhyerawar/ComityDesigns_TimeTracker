@@ -1,0 +1,25 @@
+<aura:component controller="AdminPageComponentController">
+    
+    <aura:attribute name="modalHeader" type="String" />
+    <aura:handler event="c:closeModalEvent" action="{!c.cancel}"/>
+    
+    <div tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-backdrop" aura:id="modaldialog">
+        <div class="slds-modal__container ">
+            <div class="slds-modal__header ">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse slds-notify__close" onclick = "{!c.cancel}">
+                    <c:SVGIcon svgPath="/resource/SLDS214/assets/icons/action-sprite/svg/symbols.svg#close"
+                               class="slds-button__icon slds-button__icon--large" assistiveText="Close"/>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">{!v.modalHeader}</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <c:ConfigSettingsNewEntryForm />
+            </div>
+        </div>
+        <div aura:id="lockUI" class="slds-backdrop--hide" />
+        <!--message label-->
+        <div aura:id="messageLabelDiv" class="hidden margin-bottom-0-75">
+            <label aura:id="messageLabel">{!v.message}</label>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="isEdit" type="Boolean"/>
+    <aura:attribute name="isUndo" type="Boolean"/>
+</aura:event>

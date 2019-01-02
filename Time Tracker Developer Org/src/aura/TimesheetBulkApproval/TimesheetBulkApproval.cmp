@@ -1,0 +1,7 @@
+<!--
+	@ Purpose : Displays list of Submitted Timesheet records for mass approval or rejection.
+	@ Name	  : TimesheetBulkApproval.cmp	
+-->
+<aura:component >
+	
+</aura:component>

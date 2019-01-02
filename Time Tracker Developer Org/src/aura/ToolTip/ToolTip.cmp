@@ -1,0 +1,12 @@
+<aura:component >
+    <aura:attribute name="helpText" type="String" />
+        <div aura:id="toolTipDiv" class="slds-hide slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" id="help" style="position:relative;top:0px;left:15px;">
+            <div class="slds-popover__body">{!v.helpText}</div>
+        </div>
+        <div class="slds-form-element__icon slds-align-middle">
+            <button class="slds-button slds-button slds-button--icon" aria-describedby="help" title="Help" onclick="{!c.showToolTip}">
+                <lightning:icon iconName="utility:info" size="x-small" />
+                <span class="slds-assistive-text">Help</span>
+            </button>
+        </div>
+</aura:component>

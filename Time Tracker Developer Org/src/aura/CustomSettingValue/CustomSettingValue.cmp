@@ -1,0 +1,85 @@
+<!--
+	@ Purpose : Displays each value of ConfigSetting records table of 'Configuration Settings' tab.
+	@ Name	  : CustomSettingValue.cmp
+-->
+
+<aura:component controller="AdminPageComponentController">
+    
+    <!-- Aura Attributes -->
+    <aura:attribute name="rowIndex" type="integer"/>
+    <aura:attribute name="colIndex" type="integer"/>
+    
+    <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="setting" type="Object" />
+    <aura:attribute name="field" type="Object"/>
+    <aura:attribute name="settingType" type="String" />
+    <aura:attribute name="objNameList" type="String[]" />
+    <aura:attribute name="isChecked" type="Boolean"/>
+    <aura:attribute name="defaultInputText" type="String"/>
+    
+    <aura:attribute name="changedTextAfterInput" type="String"/>
+    <aura:attribute name="oldFieldValue" type="String"/>
+    <aura:attribute name="newFieldValue" type="String" default="null"/>
+    <aura:attribute name="isCheckBoxDisabled" type="Boolean" default="true"/>
+    <aura:attribute name="isDropdownDisabled" type="Boolean" default="false"/>
+    <aura:attribute name="valueIsChanged" type="Boolean" default="false"/>
+    <aura:attribute name="isNameFieldEmpty" type="Boolean" default="false"/>
+    <aura:attribute name="fieldValue" type="String"/>
+    
+    <aura:attribute name="isInputSelectRendered" type="Boolean" />
+    <aura:attribute name="isCheckboxRendered" type="Boolean" />
+    <aura:attribute name="isOutputTextRendered" type="Boolean" />
+    <aura:attribute name="isEdit" type="Boolean" />
+    
+    <!-- Aura handlers -->
+    <aura:handler event="c:saveClickEvent" action="{!c.handleSave}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- Aura Event Registration -->
+    <aura:registerEvent name="counterEvent" type="c:counterEvent"/>
+    <aura:registerEvent name="passRowColIndexEvt" type="c:passRowColIndexEvt"/>
+    <!--<aura:registerEvent name="changeColorEvt" type="c:Pass"/> -->
+    <aura:registerEvent name="editToggleEvent" type="c:onEditToggleEvent"/>
+    <aura:registerEvent name="updateEvent" type="c:updateEvent"/>
+    <div aura:id="outerDivID" class="slds-grid">
+        <div class="test">
+            <div aura:id="outputTextDiv" class="slds-hide slds-cell-shrink" >
+                <ui:outputText aura:Id="outputTextId" value="{!v.changedTextAfterInput}" 
+                               title="{!v.changedTextAfterInput}" class="test slds-cell-shrink" />
+            </div>
+            <div aura:id="inputTextDiv" class="slds-hide slds-has-focus slds-popover slds-popover--edit" 
+                 role="dialog" style="position:absolute;top:0px;left:0.0625rem;">
+                <span id="form-start" tabindex="0"></span>
+                <div class="slds-popover__body">
+                    <div class="slds-form-element slds-grid">
+                        <label class="slds-form-element__label  slds-hide" 
+                               aura:id="reqDiv" for="text-input-01">
+                            <abbr class="slds-required" title="required">*</abbr></label>
+                        <div class="slds-form-element__control slds-grow">
+                            <ui:inputText aura:id="inputTextId" value="{!v.defaultInputText}" 
+                                          blur="{!c.showChangedValue}" focus="{!c.handleFocus}" 
+                                          class="slds-input slds-grid slds-grid--align-spread"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div aura:id="inputCheckBoxDiv" class="slds-hide slds-has-focus">
+                <label class="slds-checkbox">
+                    <ui:inputCheckbox aura:Id="inputCheckboxId" value="{!v.isChecked}" 
+                                      disabled="{!v.isCheckBoxDisabled}" focus="{!c.handleFocus}" 
+                                      change="{!c.showChangedValue}" class="slds-grid--align-center"/>          
+                    <span class="slds-checkbox--faux" />
+                </label>
+            </div>
+            <div aura:id="inputSelectDiv" class="slds-hide slds-has-focus"></div>
+        </div>
+        <div class="slds-col slds-grid slds-grid--align-end">
+            <lightning:buttonIcon aura:id="undoButton" variant="container" onclick="{!c.onUndo}" 
+                                  iconName="utility:undo" class="slds-hide"/>
+            <lightning:buttonIcon aura:id="editButton" variant="container" onclick="{!c.onEdit}" 
+                                  iconName="utility:edit" 
+                                  iconClass="slds-button__icon slds-button__icon--hint slds-button__icon--edit"/>																
+        </div>
+    </div>
+    {!v.body}
+</aura:component>

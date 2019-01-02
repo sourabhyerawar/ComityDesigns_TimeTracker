@@ -1,0 +1,477 @@
+<!--
+	@ Purpose : Displays the new form of Config Setting Custom Setting record; 
+				when entity type is selected from 'Track New Activities' tab.
+	@ Name    : ConfigSettingsNewEntryForm.cmp
+-->
+
+<aura:component access="global" controller="AdminPageComponentController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes">
+	
+	<!-- Dependencies -->
+    <aura:dependency resource="markup://c:Spinner" />
+	
+	<!-- Attributes -->
+    <aura:attribute name="trackedEntity" type="String"/>
+    <aura:attribute name="isManualObjectSelected" type="boolean" default="false"/>
+    <aura:attribute name="settings" type="string"/>
+    <aura:attribute name="csMetadata" type="Object"/>
+    <aura:attribute name="isManualSelected" type="Boolean" default="true"/>
+    <aura:attribute name="isCustomObjectSelected" type="Boolean" default="false"/>
+    <aura:attribute name="isSaveAndNew" type="boolean" />
+    <aura:attribute name="containsValue" type="boolean" default="false"/>
+    <aura:attribute name="activityName" type="String" />
+    <aura:attribute name="formattedName" type="String" />
+    <aura:attribute name="objectName" type="String" />
+    <aura:attribute name="objectDetails" type="String" />
+    <aura:attribute name="strategyCustomSettingName" type="String" />
+    <aura:attribute name="VFPageList" type="String[]" />
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="jsonFacet" type="Aura.Component[]"/>
+    <aura:attribute name="goneThereEarlier" type="Boolean" default='false'/>
+	<aura:attribute name="consts" type="Object" default=""/>
+    <aura:attribute name="namespace" type="String" default=""/>
+    
+    <!-- Event Registration -->
+    <aura:registerEvent name="closeModalevent" type="c:closeModalEvent" />
+    <aura:registerEvent name="afterSaveRefresh" type="c:afterSaveRefresh" />
+    <aura:registerEvent name="saveClickEvent" type="c:saveClickEvent" />
+    <aura:registerEvent name="PassNewlyCreatedSettingsToConfigSettingProgress" 
+                        type="c:PassNewlyCreatedSettingsToConfigSettingProgress" />
+    <aura:registerEvent name="resetNewEntryForm" type="c:ResetNewEntryFormEvent"/>
+    <aura:registerEvent name="changeTabId" type="c:ChangeTabEvent"/>
+    
+	<!-- Event Handlers -->
+    <aura:handler event="c:SetSelection" action="{!c.setSelectedValue}"/>
+    <aura:method name="handleSave" action="{!c.handleSave}" access="public" 
+                 description="Save method to save new entry">
+        <aura:attribute name="isSaveAndNew" type="boolean" />
+    </aura:method>
+
+    <aura:handler name="init" action="{!c.handleInit}" value="{!this}" />
+    <aura:handler name="clearTypeAheadText" event="c:ClearTypeAheadTextEvent" 
+                  action="{!c.handlerClearTextTypeAheadEvent}"/>
+    
+    <!-- Input Form using components -->
+    <div aura:id="errorMsgID" class="slds-hide">
+        <c:ErrorLabelComponent errorMsg="{!v.errorMsg}" />
+    </div>
+
+    <div class="container" style=" margin-left: 100px; margin-right: 100px;">
+        <div class="slds-form--compound slds-is-relative">
+		
+            <lightning:spinner alternativeText="Loading..." aura:id="spinnerDiv" 
+                               class="slds-hide" variant="brand" 
+                               size="small"/>
+							   
+            <div class="slds-form-element slds-is-required">
+                <div class="slds-form-element__control">
+                    
+                    <!-- COMMON FIELDS -->
+                    <div aura:id="errorDivCSName" class="slds-form-element hide-element">
+                        <label>
+                            <abbr class="slds-required" title="required" for="activityNameID">*</abbr>
+                            {!v.consts.LBL_ACTIVITY_NAME_IN_SETTINGS}
+                        </label>
+                        <div class="slds-form-element__control">
+                            <ui:inputText aura:id="customSettingNameID" class="slds-input" 
+                                          focus="{!c.handleCSNameFocus}" 
+                                          change="{!c.handleCustomSettingNameChange}" 
+                                          value="{!v.formattedName}" />
+                        </div>
+                        <div aura:id="emcsnamerequired" class="slds-form-element__help slds-hide slds-required">
+                            {!v.consts.ERR_FIELD_REQUIRED}
+                        </div>
+                        <div aura:id="emcsnamelengthexceed" 
+                             class="slds-form-element__help slds-hide slds-required">
+                            {!v.consts.ERR_FIELD_TOO_LONG}
+                        </div>
+                        <div aura:id="emcsnameused" class="slds-form-element__help slds-hide slds-required">
+                            {!v.consts.ERR_SETTING_NAME_ALREADY_USED}
+                        </div>
+                    </div>
+                    <!-- COMMON FIELDS -->
+
+                    <!-- FIELDS TO BE SHOWN IF CUSTOM SETTING TYPE IS CUSTOM EVENTS -->
+                    <div aura:id="customEventDiv" class="slds-hide">
+						<div class="slds-form-element__row">
+							<div aura:id="objErrDivCustom" class="slds-form-element slds-size_1-of-2">
+								<label>
+									<abbr class="slds-required" title="required" for="searchCompCustom">*</abbr>
+									{!v.consts.LBL_OBJECT_NAME}
+								</label>
+								<div class="slds-form-element__control">
+                                    <!--
+								<c:SearchComponent aura:id="searchCompCustom" 
+                                                   trackedEntity="{!v.consts.OBJECTS}" 
+                                                   settingType="{!v.consts.LBL_CUSTOM_EVENTS}" 
+                                                   namespace="{!v.namespace}" />-->
+								</div>
+								<div aura:id="objErrMsgDivCustom" 
+                                         class="slds-form-element__help slds-hide slds-required">
+                                        {!v.consts.ERR_FIELD_REQUIRED}
+                                    </div>
+							</div>
+							
+							<div aura:id="errorDiv" class="slds-form-element slds-size_1-of-2">
+								<label>
+									<abbr class="slds-required" title="required" for="activityNameID">*</abbr>
+									{!v.consts.LBL_ACTIVITY_NAME}
+								</label>
+								<div class="slds-form-element__control">
+									<ui:inputText aura:id="activityNameID" class="slds-input" 
+                                                change="{!c.handleNameChange}" value="{!v.activityName}" />
+								</div>
+								<div aura:id="error-message" 
+									 class="slds-form-element__help slds-hide slds-required">
+									{!v.consts.ERR_FIELD_REQUIRED}
+								</div>
+							</div>							
+                        </div>
+						
+                        <div class="slds-form-element__row">
+                            <div aura:id="errorDivStaticResourceId" class="slds-form-element slds-size--1-of-2">
+								<label>
+									<abbr class="slds-required" title="required" for="staticResNameID">*</abbr>
+									Static Resource Name
+								</label>
+								<ui:inputText aura:id="staticResNameID" class="slds-input" 
+											  value="TimeTrackerCustomEvents" disabled="true"/>
+                            </div>
+							
+                            <div class="slds-form-element slds-size--1-of-2">
+                                <div aura:id="errorDivJS" class="slds-form-element">
+                                    <label>
+                                        <abbr class="slds-required" title="required" for="JSFileNameID">*</abbr>
+                                       JS file name within the static resource
+                                    </label>
+                                    <ui:inputText aura:id="JSFileNameID" class="slds-input" placeholder="/AddNextActionDate.js"/>
+                                    <div aura:id="error-message-JS" 
+                                         class="slds-form-element__help slds-hide slds-required">
+                                        {!v.consts.ERR_FIELD_REQUIRED}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						
+                        <div class="slds-form-element__row">
+                            <div aura:id="errorDivRegEx" class="slds-form-element slds-size--1-of-2">
+                                <label>
+									<abbr class="slds-required" title="required" for="regExID">*</abbr>
+									Reg-Expression for the Matching-URL
+                                </label>
+                                <ui:inputText aura:id="regExID" class="slds-input" placeholder="\/500(.*)\/e(.*)"/> 
+                                <div aura:id="error-message-regEx" 
+									 class="slds-form-element__help slds-hide slds-required">
+									{!v.consts.ERR_FIELD_REQUIRED}
+                                </div>
+                            </div>
+                        </div>
+						
+                        <div class="slds-form-element__row">
+							<div aura:id="errorDivStdObjLkp" class="slds-form-element slds-size--1-of-2">
+								<label>
+									<abbr for="stdObjLookupID"></abbr>
+									Standard Object Lookup
+								</label>
+								<ui:inputText aura:id="stdObjLookupID" class="slds-input" placeholder="AccountId:Account__c;"/>
+							</div>
+							
+							<div aura:id="errorDivCustObjLkp" class="slds-form-element slds-size--1-of-2">
+								<label>
+									<abbr for="custObjLookupID"></abbr>
+									Custom Object Lookup
+								</label>
+								<ui:inputText aura:id="custObjLookupID" class="slds-input" placeholder="CustomObjectRecordId:TimeTrackerField;"/>
+							</div>
+                        </div>
+						
+                        <div class="slds-form-element__row">
+							<div aura:id="errorDivUrlParam" class="slds-size--1-of-2"> 
+								<label>
+									<abbr for="urlParamID"></abbr>
+									URL Parameter
+								</label>
+								<ui:inputText aura:id="urlParamID" class="slds-input" placeholder="id"/>
+                            </div>
+							&nbsp;&nbsp;
+							
+							<div aura:id="errorDivExcludeAction" class="slds-size--1-of-2">
+								<label>
+									<abbr for="excludeActID"></abbr>
+									Exclude Actions
+								</label>
+								<ui:inputText aura:id="excludeActID" class="slds-input" placeholder="New Case; Edit Case;"/>
+							</div>
+                        </div>
+						
+                        <div class="slds-form-element__group">
+                            <div class="slds-form-element__row">
+                                <div aura:id="errorDivCancelActName" class="slds-form-element slds-size--1-of-2">
+									<label>
+										<abbr for="cancleActNameID"></abbr>
+										Cancel Action Name
+									</label>
+                                    <ui:inputText aura:id="cancleActNameID" class="slds-input" placeholder="Case Cancel"/>
+                                </div>
+								
+                                <div aura:id="errorDivCancelActCat" class="slds-form-element slds-size--1-of-2">
+									<label>
+										<abbr for="cancleActCatID"></abbr>
+										Cancel Action Category
+									</label>
+                                    <ui:inputText aura:id="cancleActCatID" class="slds-input" placeholder="Case Cancellation"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIELDS TO BE SHOWN IF CUSTOM SETTING TYPE IS CUSTOM EVENTS -->
+
+
+                    <!-- FIELDS TO BE SHOWN IF CUSTOM SETTING TYPE IS URL -->
+                    <div aura:id="urlFieldDiv" class="slds-hide">
+                        
+						<div aura:id="errorDivPage" class="slds-form-element">
+                            <lightning:select aura:id="VFPageID" name="VisualForce Pages" 
+                                              label="VisualForce Pages" 
+                                              onchange="{!c.handlePageChange}">
+                                <option value="{!v.consts.LBL_SELECT}">{!v.consts.LBL_SELECT}</option>
+                                <aura:iteration items="{!v.VFPageList}" var="page">
+                                    <option value="{!page}">{!page}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                            <div aura:id="error-message-Page" 
+                                 class="slds-form-element__help slds-hide slds-required"> 
+                                	{!v.consts.ERR_FIELD_REQUIRED} 
+                            </div>
+                        </div>
+                        <br/>
+						
+                        <div class="slds-form-element__group">
+                            
+							<div class="slds-form-element__row">
+								<div aura:id="errorDivVF" class="slds-form-element slds-size--1-of-2">
+									<label> 
+										<abbr class="slds-required" title="required" for="activityNameIDVF">*</abbr> 
+										{!v.consts.LBL_ACTIVITY_NAME} 
+									</label>
+									<ui:inputText aura:id="activityNameIDVF" class="slds-input" 
+												  change="{!c.handleNameChangeVF}" 
+												  value="{!v.activityName}" 
+												  focus="{!c.handleNameFocusVF}"/>
+									<div aura:id="error-message-vf-act-name" 
+										 class="slds-form-element__help slds-hide slds-required">
+										{!v.consts.ERR_FIELD_REQUIRED}
+									</div>
+                                </div>
+								
+                                <div aura:id="errorDivUrlPatternText" class="slds-form-element slds-size--1-of-2">
+									<label> 
+										<abbr for="urlPatternTextID"></abbr> 
+										URL Pattern
+									</label>
+									<ui:inputText aura:id="urlPatternTextID" class="slds-input" placeholder="/apex/VisualForcePageName"/>
+                                </div>
+                            </div>
+							
+                            <div class="slds-form-element__row">
+                                <div aura:id="errorDivObjParamText" class="slds-form-element slds-size--1-of-2">
+									<label> 
+										<abbr for="objParamTextID"></abbr> 
+										Object-Id Parameter
+									</label>
+                                    <ui:inputText aura:id="objParamTextID" class="slds-input" placeholder="id"/>
+                                </div>
+								
+                                <div aura:id="errorDivParentObjParamText" class="slds-form-element slds-size--1-of-2">
+									<label> 
+										<abbr for="parentObjParamTextID"></abbr> 
+										Parent-Object-Id Parameter
+									</label>
+                                    <ui:inputText aura:id="parentObjParamTextID" class="slds-input" placeholder="pid"/>
+                                </div>
+                            </div>
+							
+                        </div>
+						
+                    </div>
+                    <!-- FIELDS TO BE SHOWN IF CUSTOM SETTING TYPE IS URL -->
+
+
+                    <!-- FIELDS TO BE SHOWN IF CUSTOM SETTING TYPE IS MANUAL -->
+                    <div aura:id="manualFieldDiv" class="slds-hide">
+                        <div class="slds-form-element__group">
+                            
+							<div aura:id="errordivmanact" class="slds-form-element">
+                                <label>
+                                    <abbr class="slds-required" title="required" for="activityNameIDMA">*</abbr>
+                                    {!v.consts.LBL_ACTIVITY_NAME}
+                                </label>
+                              	<div class="slds-form-element__control">
+                                    <ui:inputText aura:id="activityNameIDMA" class="slds-input" 
+                                                  change="{!c.handleNameChangeMA}" value="{!v.activityName}"/>
+                              	</div>
+                              	<div aura:id="errormessagemanact" 
+                                     class="slds-form-element__help slds-hide slds-required">
+                                    	{!v.consts.ERR_FIELD_REQUIRED}
+                                </div>
+                            </div>
+							
+							<div class="slds-form-element__row">
+                                <div aura:id="objErrDiv" class="slds-form-element slds-size--1-of-2" style="margin-top:5px!important;">
+                                    <label>
+										<abbr class="slds-required" title="required" for="searchCompID">*</abbr>
+                                    	{!v.consts.LBL_OBJECT_NAME}
+									</label>
+									<div class="slds-form-element__control">
+                                        <!--
+										<c:SearchComponent aura:id="searchCompID" 
+														   trackedEntity="{!v.consts.OBJECTS}" 
+														   settingType="{!v.consts.LBL_MANUAL_ACTIVITY}" 
+														   namespace="{!v.namespace}"/>-->
+									</div>
+                                    <div aura:id="objErrMsgDiv" 
+                                         class="slds-form-element__help slds-hide slds-required">
+                                        {!v.consts.ERR_FIELD_REQUIRED}
+                                    </div>
+                                </div>
+								
+                                <div class="slds-form-element slds-size--1-of-2" style="margin-top:5px!important;">
+									<br/>
+                                    <label class="slds-checkbox">
+                                        <ui:inputCheckbox aura:id="isCommentRequired" disabled="false" 
+                                                          value="false"/>
+                                        <span class="slds-checkbox--faux" />
+                                        <span class="slds-form-element__label">
+                                            {!v.consts.LBL_MAKE_COMMENT_MANDATORY}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+							
+							<div class="slds-form-element__row">
+								<div aura:id="sobjectdetails" class="slds-form-element slds-size--1-of-2" style="margin-top:2px!important;">
+									<label>
+										<abbr class="slds-required" title="required" for="sobjectFieldId">*</abbr>
+										{!v.consts.LBL_SOBJECT_FIELD}
+                                    </label>
+									<ui:inputSelect aura:id="sobjectFieldId" label="" focus="{!c.setOptions}" 
+													click="{!c.populateJSONText}" class="pull-picklist slds-select" disabled="{!!v.isManualObjectSelected}">
+                                    
+                                  </ui:inputSelect>
+                                </div>
+								
+                                <div class="slds-form-element slds-size--1-of-2">
+									<br/>
+									<label class="slds-checkbox">
+                                        <ui:inputCheckbox aura:id="isRequired" 
+                                                          labelClass="slds-form-element__label" 
+                                                          disabled="true"/>
+                                        <span class="slds-checkbox--faux"/>
+                                        <span class="slds-form-element__label">
+                                            {!v.consts.LBL_MAKE_OBJECT_MANDATORY}
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+							
+                            <div class="slds-form-element__row ">
+                                <div class="slds-form-element slds-size--1-of-2 slds-grid">
+                                    <label>
+										<abbr class="slds-required" title="required">*</abbr>
+                                    	{!v.consts.LBL_SOBJECT_SETTINGS}
+                                    </label>
+                                </div>
+                            </div>
+                            <div aura:id="errorDivJSON" class="slds-form-element__row">
+                                <ui:inputTextArea aura:id="jsonText" 
+                                                  placeholder="Select Object Name and field to populate settings" 
+                                                  required="true" disabled="true" cols="80" class="slds-textarea"/>
+                                <div aura:id="error-message-JSON " class="slds-form-element__help slds-hide slds-required">
+                                    {!v.consts.ERR_FIELD_REQUIRED}
+                                </div>
+                            </div>
+							
+							<div style="margin-bottom:12px!important;">
+								<lightning:select aura:id="permissionSetsTextID" name="Permission Set" 
+												  label="{!v.consts.LBL_PERMISSION_SET}">
+									<option value="All">All</option>
+									<option value="{!v.consts.TT_PERMISSION_SET}">
+										{!v.consts.TT_PERMISSION_SET}
+									</option>
+									<option value="{!v.consts.TT_ADMIN_PERMISSION_SET}">
+										{!v.consts.TT_ADMIN_PERMISSION_SET}
+									</option>
+								</lightning:select>
+							</div>
+                        </div>
+                    </div>
+                    <!-- FIELDS TO BE SHOWN IF CUSTOM SETTING TYPE IS MANUAL -->
+
+                    <!-- COMMON FIELDS -->
+                    <div class="slds-form-element__row">
+						<div aura:id="errorDivActionCategoryId" class="slds-form-element slds-size_1-of-2">
+							<label>
+								<abbr class="slds-required" title="required" for="actionCategoryId">*</abbr>
+								Action Category
+							</label>
+							<div class="slds-form-element__control">
+								<ui:inputText aura:id="timesheetEntryNameID" class="slds-input"/>
+							</div>
+							<div aura:id="error-message-actionCategoryId" 
+								 class="slds-form-element__help slds-hide slds-required">
+								{!v.consts.ERR_FIELD_REQUIRED}
+							</div>
+						</div>
+						  
+						<div aura:id="errorDivActionGroupId" class="slds-form-element slds-size_1-of-2">
+							<label>
+								<abbr class="slds-required" title="required" for="actionGroupId">*</abbr>
+								Action Group
+							</label>
+							<div class="slds-form-element__control">
+								<ui:inputText aura:id="activityGroupTextID" class="slds-input"/>
+							</div>
+							<div aura:id="error-message-actionGroupId" 
+								 class="slds-form-element__help slds-hide slds-required">
+								{!v.consts.ERR_FIELD_REQUIRED}
+							</div>
+						</div>
+                    </div>
+
+                    <br></br>
+                    <div class="slds-form-element__group">
+						<div class="slds-form-element__row">
+							<div class="slds-form-element slds-size--1-of-2">
+								<lightning:input type="checkbox" aura:id="IsBillable" label="Billable"/>
+							</div>
+							<div class="slds-form-element slds-size--1-of-2">
+								<lightning:input type="checkbox" aura:id="IsUtilized" label="Utilized"/>
+							</div>
+						</div>
+						<div class="slds-form-element__row">
+							<div class="slds-form-element slds-size--1-of-2">
+								<lightning:input type="checkbox" aura:id="IsReportable" label="Non-Reportable"/>
+							</div>
+							<div class="slds-form-element slds-size--1-of-2">
+								<lightning:input type="checkbox" aura:id="IsStaging" label="Staging Record Creation"/>
+							</div>
+						</div>
+                    </div>
+					
+                    <div class="slds-form-element__row">
+						<div class="form-footer">
+							<div class="slds-grid slds-grid--vertical-align-end slds-grid--align-center">
+								<lightning:button label="Verify" onclick="{!c.handleVerify}" variant="brand"/>
+								<lightning:button label="Save" onclick="{!c.handleSave}" variant="brand" />
+								<lightning:button label="Reset" onclick="{!c.handleCancel}" variant="brand" />
+							</div>
+						</div>
+                    </div>
+					
+				</div>
+            </div>
+        </div>
+    </div>
+    {!v.body}
+    <!-- ./container-->
+</aura:component>

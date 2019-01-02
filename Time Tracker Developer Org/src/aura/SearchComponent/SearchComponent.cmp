@@ -1,0 +1,68 @@
+<!--
+	@ Purpose		 : Displays the Type Ahead Input Lookup field.
+	@ Component Name : SearchComponent
+-->
+
+<aura:component access="global" controller="AdminPageComponentController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickAction">
+    
+    <!-- Aura Attributes -->
+    <aura:attribute name="namespace" type="String" default=""/>
+    <aura:attribute name="trackedEntity" type="String" />
+    <aura:attribute name="settingType" type="String" />
+    <aura:attribute name="sObject" type="String" />
+    <aura:attribute name="notFoundText" type="String"/>
+    <aura:attribute name="trackedEntityArray" type="String[]" />
+    <aura:attribute name="itemsToBeTracked" type="String[]" />
+    <aura:attribute name="fields" type="String" />
+    <aura:attribute name="searchInput" type="String" default=""/>
+    <aura:attribute name="valueIsSet" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="trackedEntityMap" type="Map" default="{}"/>
+    
+    <!-- Aura Event Registration -->
+    <aura:registerEvent name="clearTypeAheadText" type="c:ClearTypeAheadTextEvent"/>
+    
+    <!-- Aura Event Handler -->
+    <aura:handler event="c:ResetNewEntryFormEvent" action="{!c.resetNewEntryForm}"/>
+    <aura:handler name="change" value="{!v.searchInput}" action="{!c.searchInputChange}"/>
+    <aura:handler event="c:SetSelection" action="{!c.setSelectedValue}"/>
+
+    <div aura:id="errorMsgID" class="slds-hide">
+        <c:ErrorLabelComponent errorMsg="{!v.errorMsg}" />
+    </div>
+    
+    <div class="slds-form-element slds-lookup slds-is-open">
+        <div class="slds-form-element__control">
+            <div class="slds-input-has-icon slds-input-has-icon--left-right">
+                
+                <lightning:icon iconName="utility:search" size="x-small" 
+                                class="slds-input__icon slds-input__icon--left"/>
+                <ui:inputText aura:id="searchInput" value="{!v.searchInput}" required="true" updateOn="keyup" 
+                              placeholder="{!'Search '+ v.trackedEntity}" class="slds-input slds-lookup__search-input" 
+                              keyup="{!c.showLookupMenu}"/>
+                
+                <button class="slds-input__icon slds-input__icon--right slds-button slds-button--icon slds-input__icon--right" 
+                        onclick="{!c.clearSearchtext}">
+                    <lightning:buttonIcon iconName="utility:clear" size="x-small" class="slds-input__icon"/>
+                    <span class="slds-assistive-text">Clear the current search term</span>
+                </button>
+            </div>
+        </div>
+        <div aura:id="lookupMenu" class="slds-hide">
+            <ul class="slds-lookup__list" role="listbox">
+                <li role="presentation">
+                    <span class="slds-lookup__item-action slds-lookup__item-action--label slds-has-focus" id="lookup-option-391" role="option">
+                        <lightning:icon iconName="utility:search" size="x-small" class="slds-icon-text-default"/>
+                        <span class="slds-truncate">&quot;{!v.searchInput}&quot; in {!v.trackedEntity} {!v.notFoundText}</span>
+                    </span>
+                </li>
+                <div aura:id="iterationID">
+                    <aura:iteration items="{!v.trackedEntityArray}" var="entity">
+                        <c:SearchResultComponent resultText="{!entity}" iconName="custom:custom62"/>
+                    </aura:iteration>    
+                </div>
+            </ul>
+        </div>
+    </div>
+</aura:component>

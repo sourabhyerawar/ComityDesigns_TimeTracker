@@ -1,0 +1,960 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>Comment</label>
+        <length>2000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Friday_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <label>Friday Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.Day_of_Week__c</field>
+            <operation>equals</operation>
+            <value>6</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Friday_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Friday_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Friday_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Friday_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Friday_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+IF( 
+MOD(MOD(Friday_Seconds__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Friday_Seconds__c,3600),60)), 
+TEXT(MOD(MOD(Friday_Seconds__c,3600),60)))</formula>
+        <label>Friday Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Friday__c</fullName>
+        <externalId>false</externalId>
+        <label>Friday</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Is_Current_User_Manager__c</fullName>
+        <externalId>false</externalId>
+        <formula>OR((User__r.ManagerId = $User.Id),(User__r.Manager.ManagerId = $User.Id ),(User__r.Manager.Manager.ManagerId = $User.Id),(User__r.Manager.Manager.Manager.ManagerId = $User.Id),( User__r.Manager.Manager.Manager.Manager.ManagerId = $User.Id),( User__r.Manager.Manager.Manager.Manager.Manager.ManagerId = $User.Id))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Current User Manager</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Latest_Submission_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Latest Submission Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Monday_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <label>Monday Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.Day_of_Week__c</field>
+            <operation>equals</operation>
+            <value>2</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Monday_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Monday_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Monday_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Monday_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Monday_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+IF( 
+MOD(MOD(Monday_Seconds__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Monday_Seconds__c,3600),60)), 
+TEXT(MOD(MOD(Monday_Seconds__c,3600),60)))</formula>
+        <label>Monday Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Monday__c</fullName>
+        <externalId>false</externalId>
+        <label>Monday</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Rejections__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Rejections</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>11</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>13</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>14</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>15</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>16</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>17</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>18</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>19</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>20</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Number_of_Submission_for_Approval__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Submissions</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>11</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>13</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>14</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>15</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>16</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>17</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>18</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>19</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>20</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Saturday_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <label>Saturday Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.Day_of_Week__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Saturday_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Saturday_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Saturday_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Saturday_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Saturday_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+IF( 
+MOD(MOD(Saturday_Seconds__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Saturday_Seconds__c,3600),60)), 
+TEXT(MOD(MOD(Saturday_Seconds__c,3600),60)))</formula>
+        <label>Saturday Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Saturday__c</fullName>
+        <externalId>false</externalId>
+        <label>Saturday</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Submitted</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Recalled</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Submit_Early_for_Approval__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Submit Early for Approval</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sunday_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <label>Sunday Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.Day_of_Week__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Sunday_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Sunday_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF(
+FLOOR(MOD(Sunday_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Sunday_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Sunday_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+IF(
+MOD(MOD(Sunday_Seconds__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Sunday_Seconds__c,3600),60)), 
+TEXT(MOD(MOD(Sunday_Seconds__c,3600),60)))</formula>
+        <label>Sunday Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sunday__c</fullName>
+        <externalId>false</externalId>
+        <label>Sunday</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Thursday_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <label>Thursday Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.Day_of_Week__c</field>
+            <operation>equals</operation>
+            <value>5</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Thursday_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Thursday_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Thursday_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Thursday_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Thursday_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+IF( 
+MOD(MOD(Thursday_Seconds__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Thursday_Seconds__c,3600),60)), 
+TEXT(MOD(MOD(Thursday_Seconds__c,3600),60)))</formula>
+        <label>Thursday Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Thursday__c</fullName>
+        <externalId>false</externalId>
+        <label>Thursday</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Total_Non_Utilized_Time_Spent_New__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR( (Total_Seconds__c - Total_Utilized_Seconds_New__c) /3600)) + 
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD((Total_Seconds__c - Total_Utilized_Seconds_New__c),3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD((Total_Seconds__c - Total_Utilized_Seconds_New__c),3600)/60)), 
+TEXT(FLOOR(MOD((Total_Seconds__c - Total_Utilized_Seconds_New__c),3600)/60))) + &apos;:&apos; + 
+IF( 
+MOD(MOD((Total_Seconds__c - Total_Utilized_Seconds_New__c),3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD((Total_Seconds__c - Total_Utilized_Seconds_New__c),3600),60)), 
+TEXT(MOD(MOD((Total_Seconds__c - Total_Utilized_Seconds_New__c),3600),60)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Non Utilized Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Non_Utilized_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR( (Total_Seconds__c -  Total_Utilized_Seconds__c)/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD((Total_Seconds__c -  Total_Utilized_Seconds__c),3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD((Total_Seconds__c -  Total_Utilized_Seconds__c),3600)/60)), 
+TEXT(FLOOR(MOD((Total_Seconds__c -  Total_Utilized_Seconds__c),3600)/60))) + &apos;:&apos; + 
+
+TEXT(ROUND(MOD(MOD((Total_Seconds__c -  Total_Utilized_Seconds__c),3600),60),0))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Non Utilized Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sunday_Seconds__c + 
+Monday_Seconds__c + 
+Tuesday_Seconds__c + 
+Wednesday_Seconds__c + 
+Thursday_Seconds__c + 
+Friday_Seconds__c + 
+Saturday_Seconds__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Seconds</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Total_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Total_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Total_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Total_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+IF( 
+MOD(MOD(Total_Seconds__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Total_Seconds__c,3600),60)), 
+TEXT(MOD(MOD(Total_Seconds__c,3600),60)))</formula>
+        <label>Total Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Utilization_Percentage__c</fullName>
+        <description>If weekly hours is defined in customs settings it calculates the percentage of utilization. In the absence of valid values it will show a negative one to show the error.</description>
+        <externalId>false</externalId>
+        <formula>IF ( OR(ISBLANK($Setup.TimeTrackerUserSettings__c.Weekly_Hours__c), $Setup.TimeTrackerUserSettings__c.Weekly_Hours__c &lt;=0), -1, 
+ Total_Utilized_Seconds_New__c /($Setup.TimeTrackerUserSettings__c.Weekly_Hours__c*3600)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Utilization Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Total_Utilized_Seconds_New__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Utilized Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.isUtilized__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Utilized_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Utilized Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.isUtilized__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Utilized_Time_Spent_New__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR( Total_Utilized_Seconds_New__c /3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Total_Utilized_Seconds_New__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Total_Utilized_Seconds_New__c,3600)/60)), 
+TEXT(FLOOR(MOD(Total_Utilized_Seconds_New__c,3600)/60))) + &apos;:&apos; + 
+
+IF( 
+MOD(MOD(Total_Utilized_Seconds_New__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Total_Utilized_Seconds_New__c,3600),60)), 
+TEXT(MOD(MOD(Total_Utilized_Seconds_New__c,3600),60)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Utilized Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Utilized_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Total_Utilized_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Total_Utilized_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Total_Utilized_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Total_Utilized_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+TEXT(ROUND(MOD(MOD(Total_Utilized_Seconds__c,3600),60),0))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Utilized Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tuesday_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <label>Tuesday Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.Day_of_Week__c</field>
+            <operation>equals</operation>
+            <value>3</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Tuesday_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Tuesday_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Tuesday_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Tuesday_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Tuesday_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+IF( 
+MOD(MOD(Tuesday_Seconds__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Tuesday_Seconds__c,3600),60)), 
+TEXT(MOD(MOD(Tuesday_Seconds__c,3600),60)))</formula>
+        <label>Tuesday Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tuesday__c</fullName>
+        <externalId>false</externalId>
+        <label>Tuesday</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Unique_Timesheet_Identifier__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>false</externalId>
+        <label>Unique Timesheet Identifier</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Timesheets</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Wednesday_Seconds__c</fullName>
+        <externalId>false</externalId>
+        <label>Wednesday Seconds</label>
+        <summarizedField>Timesheet_Entry__c.Duration__c</summarizedField>
+        <summaryFilterItems>
+            <field>Timesheet_Entry__c.Day_of_Week__c</field>
+            <operation>equals</operation>
+            <value>4</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Timesheet_Entry__c.Timesheet__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Wednesday_Time_Spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( FLOOR(Wednesday_Seconds__c/3600)) + 
+
+&apos;:&apos; + 
+
+IF( 
+FLOOR(MOD(Wednesday_Seconds__c,3600)/60) &lt; 10, 
+&apos;0&apos; + TEXT(FLOOR(MOD(Wednesday_Seconds__c,3600)/60)), 
+TEXT(FLOOR(MOD(Wednesday_Seconds__c,3600)/60))) + &apos;:&apos; + 
+
+IF( 
+MOD(MOD(Wednesday_Seconds__c,3600),60) &lt; 10, 
+&apos;0&apos;+ TEXT(MOD(MOD(Wednesday_Seconds__c,3600),60)), 
+TEXT(MOD(MOD(Wednesday_Seconds__c,3600),60)))</formula>
+        <label>Wednesday Time Spent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Wednesday__c</fullName>
+        <externalId>false</externalId>
+        <label>Wednesday</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Timesheet</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Total_Time_Spent__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Timesheets</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Total_Time_Spent__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Timesheets</label>
+    </listViews>
+    <listViews>
+        <fullName>Approved_Timesheets</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Total_Time_Spent__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Approved Timesheets</label>
+    </listViews>
+    <listViews>
+        <fullName>My_Teams_Timesheet</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Total_Time_Spent__c</columns>
+        <columns>Total_Seconds__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Is_Current_User_Manager__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My Team&apos;s Timesheet</label>
+    </listViews>
+    <listViews>
+        <fullName>New_Timesheets</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Total_Time_Spent__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </filters>
+        <label>New Timesheets</label>
+    </listViews>
+    <listViews>
+        <fullName>Pending_Approval</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>Total_Time_Spent__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Submitted</value>
+        </filters>
+        <label>Pending Approval</label>
+    </listViews>
+    <listViews>
+        <fullName>Test_Users_timesheets</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>User__c</columns>
+        <columns>Total_Time_Spent__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATEDBY_USER.ALIAS</field>
+            <operation>equals</operation>
+            <value>tuser</value>
+        </filters>
+        <label>Test Users timesheets</label>
+    </listViews>
+    <nameField>
+        <label>Timesheet Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Timesheets</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Total_Time_Spent__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <listViewButtons>Bulk_Approve_Timesheets</listViewButtons>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>User__c</searchFilterFields>
+        <searchFilterFields>Total_Time_Spent__c</searchFilterFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchFilterFields>Start_Date__c</searchFilterFields>
+        <searchFilterFields>End_Date__c</searchFilterFields>
+        <searchFilterFields>UPDATEDBY_USER</searchFilterFields>
+        <searchResultsAdditionalFields>User__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Time_Spent__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>End_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <webLinks>
+        <fullName>Bulk_Approve_Timesheets</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Bulk Approve Timesheets</masterLabel>
+        <openType>sidebar</openType>
+        <page>TimesheetBulkApproval</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+</CustomObject>

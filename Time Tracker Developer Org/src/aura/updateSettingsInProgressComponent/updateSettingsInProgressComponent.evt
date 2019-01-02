@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event template" >
+	<aura:attribute name="configSettingRecord" type="Object" default=""/>
+    <aura:attribute name="updatedRecordIndex" type="Integer" default="0"/>
+</aura:event>

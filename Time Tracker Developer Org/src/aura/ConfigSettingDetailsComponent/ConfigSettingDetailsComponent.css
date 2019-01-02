@@ -1,0 +1,23 @@
+.THIS {
+}
+
+.THIS.slds-spinner_container {  
+    z-index: 10000;
+    position: fixed;   
+}
+
+@media (max-width: 600px) {
+  .THIS  {
+  }
+}
+
+.THIS.full-editable-cell {
+	width: 600px;
+}
+
+.THIS .form-footer {
+    width:100%;
+    background:#eee;
+    padding:3px;
+    height:35px
+}

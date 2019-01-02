@@ -1,0 +1,173 @@
+<!--
+	@ PURPOSE : 1. LAUNCHES FROM A FOOTER COMPONENT IN LIGHTNING CONSOLE APP
+				2. PROVIDES SCREEN TO TRACK THE TIME MANUALLY
+	@ NAME	  : LexManualTimeTracker.cmp
+-->
+<aura:component controller="ManualTimeTrackerCmpController" access="global"
+                implements="flexipage:availableForAllPageTypes">
+	
+	<!-- GIVES ACCESS TO WORKSPACE API -->
+	<lightning:workspaceAPI aura:id="workspace"/>	
+    
+	<!-- THIS EVENT FIRES WHENEVER A NEW TAB IS OPENED AND CLOSED OR SWITCHED TO AN EXISTING TAB -->
+    <aura:handler event='lightning:tabFocused' action='{! c.handleTabFocused }'/>
+	
+	<!-- CATCHES THIS EVENT WHEN COMPONENT IS LOADED -->
+    <aura:handler name="init" value="{! this }" action="{! c.initializeFooterComponent }"/>    
+	
+    <!-- CATCHES THIS EVENT WHEN VALUE IS SELECTED IN TYPE AHEAD FIELD -->
+    <aura:handler event="c:SetSelection" action="{! c.getSelectedValue }"/>
+	
+	<!-- DISPLAYS SPINNER WHEN SERVER SIDE ACTION IS INITIATED -->
+    <aura:handler event="aura:waiting" action="{! c.showSpinner }"/>
+    
+	<!-- HIDES SPINNER WHEN SERVER SIDE ACTION IS COMPLETED -->
+    <aura:handler event="aura:doneWaiting" action="{! c.hideSpinner }"/>
+    
+    <!-- HOLDS THE DETAILS OF FIELDS, BUTTONS, ETC -->
+    <aura:attribute name="consoleState" type="Object"/>
+	
+	<!-- HOLDS CUSTOM LABELS AND OTHER CONSTANT VALUES -->
+	<aura:attribute name="constants" type="Object"/>
+	
+	<!-- HOLDS THE DETAILS OF CURRENT CONSOLE TAB RECORD -->
+    <aura:attribute name="currentTabRecord" type="Object" default="{}"/>
+	
+	<!-- SHOWS SPINNER WHEN HOLDS TRUE OTHERWISE HIDES IT -->
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    
+	<lightning:layout >
+        <lightning:layoutItem padding="around-small">
+			<div aria-labelledby="newitemform">
+		        
+                <form class="slds-form--stacked">
+					<aura:if isTrue="{! and( v.consoleState, v.constants ) }">
+						
+                        <!-- ACTIVITY DATE AND TIME SECTION -->
+						<div class="fieldWrapper">
+							<span class="uiLabel-left form-element__label uiLabel"> 
+								<span class="requiredElement"><b>*</b></span>{! v.constants.LBL_Activity_Date }
+							</span>
+							<lightning:input aura:id="field" onchange="{! c.validateActivityDate }"
+                                             type="datetime" label="{! v.constants.LBL_Activity_Date }" 
+											 value="{! v.consoleState.timeTracker.activityDate }"
+											 min="{! v.consoleState.labelStatus.minActivityDate }" required="true"
+                                             messageWhenBadInput="{! v.constants.ERR_Invalid_Activity_Date }"
+                                             messageWhenValueMissing="{! v.constants.ERR_Invalid_Activity_Date }"/>
+						</div>
+                        
+						<!-- TIMER SECTION ( START AND STOP BUTTONS ) -->
+						<div class="fieldWrapper">
+							<article class="slds-card slds-wrap">
+								<div aura:id="time" class="inputTimer">
+									<ui:inputText aura:id="timerId" class="timer slds-text-align_center" 
+												  value="{! v.consoleState.timeTracker.trackedTime }"
+												  updateOn="keyup" keyup="{! c.validateTimer }"
+												  disabled="{! v.consoleState.toggleStatus.isTimerDisabled }" />
+								</div>
+								<div align="center" class="timerBtnGroup"> 
+									<lightning:buttonIcon iconName="{! v.consoleState.labelStatus.startIcon }" variant="bare"
+														  size="large" title="{! v.consoleState.labelStatus.playPauseBtnText }"
+														  onclick="{! c.start }" iconClass="blueTheme"
+														  disabled="{! v.consoleState.toggleStatus.isBtnDisabled }" />
+									&nbsp;
+									<lightning:buttonIcon iconName="{! v.consoleState.labelStatus.stopIcon }" variant="bare" 
+														  size="large" onclick="{! c.stop }" title="{! v.constants.LBL_TT_Widget_Stop }" 
+														  iconClass="blueTheme" disabled="{! v.consoleState.toggleStatus.isStopDisabled }"/>
+								</div>
+							</article>
+						</div>
+						
+						<!-- ACTIVITY TYPE SELECTION -->
+						<div class="fieldWrapper">
+							<ui:inputSelect aura:id="activityListId" label="{! v.constants.LBL_Activity }" 
+                                            value="{! v.consoleState.timeTracker.activityName }" 
+										    required="true" change="{! c.refreshSObjectDetails }"/>
+						</div>
+						
+						<!-- OBJECT SELECTION WITH TYPE AHEAD FEATURE -->
+						<div class="fieldWrapper">
+							<div class="slds-form-element slds-lookup slds-is-open">
+								<div class="slds-form-element__control">
+									<div class="slds-input-has-icon slds-input-has-icon--left-right">   
+										<ui:inputText aura:id="searchInput" updateOn="keyup" 
+													  keyup="{! c.fetchListOfSobjectRecords }"
+													  value="{! v.consoleState.typeAheadStatus.searchInput }"
+													  label="{! v.consoleState.typeAheadStatus.sObjectLabel }"
+													  placeholder="{! 'Search ' + v.consoleState.typeAheadStatus.sObjectLabel }" 
+													  class="slds-input slds-lookup__search-input"
+													  required="{! v.consoleState.toggleStatus.isSobjectRequired }" 
+													  disabled="{! v.consoleState.toggleStatus.isSobjectDisabled }" />
+										
+										<aura:if isTrue="{! and( v.consoleState.typeAheadStatus.searchInput, v.consoleState.typeAheadStatus.searchInput.length > 0 ) }">
+											<button aura:id="clearbtn" onclick="{! c.clearSearchtext }"
+													class="slds-input__icon slds-input__icon--right slds-button slds-button--icon slds-input__icon--right">
+												<lightning:buttonIcon iconName="utility:clear" size="x-small" 
+																	  class="slds-input__icon" iconClass="clearSearch"/>
+												<span class="slds-assistive-text"> {! v.constants.LBL_Clear_Search_Keyword }</span>
+											</button>
+										</aura:if >
+										
+									</div>
+								</div>
+							
+								<!-- DROP DOWN LIST OF MATCHING RECORDS -->
+								<aura:if isTrue="{! v.consoleState.listOfSobjectRecords.length > 0 }">
+									<ul class="slds-lookup__list dropDownListSection" role="listbox">
+										<aura:iteration items="{!v.consoleState.listOfSobjectRecords}" var="entity">
+											<c:SearchResultComponent selectLabel="{! entity.label }" 
+																	 selectValue="{! entity.value }"
+																	 fieldAuraId="searchInput"
+																	 fieldNameOfListOfSourceRecords="listOfSobjectRecords"/>
+										</aura:iteration> 
+									</ul>
+								</aura:if >
+								
+								<aura:if isTrue="{! v.consoleState.toggleStatus.isSobjectDisabled }">
+									<a class="disableCursor grayOut"> {! v.constants.LBL_Get_from_Active_Tab } </a>
+									<aura:set attribute="else">
+										<a onclick="{! c.getRecordFromFocusedTab }"> {! v.constants.LBL_Get_from_Active_Tab } </a>
+									</aura:set>
+								</aura:if>
+								
+							</div>
+						</div>
+						
+						<!-- COMMENT SECTION -->
+						<div class="fieldWrapper">
+							<span class="uiLabel-left form-element__label uiLabel"> 
+								<aura:if isTrue="{! v.consoleState.toggleStatus.isCommentRequired }">
+									<span class="requiredElement"><b>*</b></span>
+								</aura:if>
+								{! v.constants.LBL_Comment }
+							</span>
+							<lightning:textarea value="{! v.consoleState.timeTracker.comment }" placeholder="{! v.constants.LBL_Comment_Placeholder }" 
+												maxlength="255" required="{! v.consoleState.toggleStatus.isCommentRequired }"
+												onchange="{! c.validateComment }"/>
+						</div>
+						
+						<!-- SUBMIT BUTTON SECTION -->
+						<div class="fieldWrapper">
+							<lightning:button label="{! v.constants.LBL_Submit }" variant="brand" onclick="{! c.handleSubmit }"
+											  class="slds-m-top--medium slds-align_absolute-center submitBtn"
+											  disabled="{! v.consoleState.toggleStatus.isSubmitDisabled }" />
+						</div>
+										
+                    </aura:if>
+                </form>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <!-- SPINNER SECTION -->
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+           <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+           </div>
+        </div>
+     </aura:if>
+    
+</aura:component>

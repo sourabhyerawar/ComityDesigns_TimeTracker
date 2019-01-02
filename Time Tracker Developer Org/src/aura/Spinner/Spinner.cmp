@@ -1,0 +1,16 @@
+<aura:component >
+    
+    <aura:method name="showSpinner" action="{!c.showSpinner}" access="PUBLIC" description="Method to show spinner"> 
+        <aura:attribute name="show" type="Boolean" default="parameter 1" /> 
+    </aura:method>
+    
+
+	<!--spinner-->
+    <div aura:id="spinnerDiv" class="slds-spinner_container slds-hide">
+        <div class="slds-spinner--brand slds-spinner slds-spinner--x-small" role="alert" >
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</aura:component>

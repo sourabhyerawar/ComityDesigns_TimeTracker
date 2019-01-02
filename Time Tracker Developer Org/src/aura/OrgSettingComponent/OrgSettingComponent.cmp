@@ -1,0 +1,132 @@
+<!--
+	@ Purpose : Displays record ( Edit view And Detail view ) of Org level User Setting custom setting record.
+	@ Name	  : OrgSettingComponent.cmp
+-->
+
+<aura:component controller="AdminPageComponentController">
+    
+    <aura:attribute name="saveDisabled" type="Boolean" default="true" />
+    <aura:attribute name="editDisabled" type="Boolean" default="false" />
+    <aura:attribute name="cancelDisabled" type="Boolean" default="true" />
+    <aura:attribute name="isDisabled" type="Boolean" default="true" />
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="namespace" type="String"/>
+    <aura:attribute name="setting" type="Object" />
+    <aura:attribute name="isClientFailNot" type="Boolean"/>
+    <aura:attribute name="isServerDebug" type="Boolean"/>
+    <aura:attribute name="isTimeSpentRO" type="Boolean"/>
+    <aura:attribute name="isStopTrackingAfterCC" type="Boolean"/>
+    
+    <aura:registerEvent name="sendOrgSettingEvent" type="c:sendOrgSettingEvent" />    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.handleInit}" />
+	<aura:handler event="c:setNamespaceEvent" action="{!c.loadNamespace}" />
+
+    <!-- 
+	<aura:handler event="c:afterSaveRefresh" action="{!c.handleAfterSaveRefresh}"/> 
+	-->
+    
+    {!v.body}
+    
+    <c:ErrorLabelComponent aura:id="errorID"/>
+    
+    <!-- 
+	<div class="slds-hide" aura:id="spinnerDiv">
+        <lightning:spinner variant="brand" size="small"/>
+    </div> 
+	-->
+    <!--
+    <div class="slds">
+        <div class="slds-col slds-colrule-bottom">
+            <h3 class="slds-section__title">
+                <lightning:buttonIcon aura:id="downButtonID" iconName="utility:down" size="medium" 
+									  variant="bare" alternativeText="Remove" onclick="{! c.toggleDivA }" 
+									  class="slds-show"/>
+                <lightning:buttonIcon aura:id="rightButtonID" iconName="utility:right" size="medium" 
+									  variant="bare" alternativeText="Remove" onclick="{! c.toggleDivB }" 
+									  class="slds-hide"/>
+                Default Organization Level Value
+            </h3>
+        </div>
+    </div>
+	-->
+    
+    <div aura:id="boxDiv" class="slds-box">
+        <div class="slds-form slds-form_compound">
+            <div class="slds-form-element__row">
+                <div class="slds-form-element slds-size_1-of-2">
+                    <lightning:select aura:id="clientDebugLevelID" name="Client Debug Level" 
+									  label="Client Debug Level" disabled="{!v.isDisabled}" >
+                        <option value=""></option>
+                        <option value="FINEST">FINEST</option>
+                        <option value="FINER">FINER</option>
+                        <option value="FINE">FINE</option>
+                        <option value="DEBUG">DEBUG</option>
+                        <option value="INFO">INFO</option>
+                        <option value="WARN">WARN</option>
+                        <option value="ERROR">ERROR</option>
+                    </lightning:select>
+                </div>
+                <!--<div class="slds-form-element slds-size_1-of-2">
+                     <lightning:input aura:id="extensionIDID" label="Chrome Extension ID" 
+									  name="Chrome Extension ID" disabled="{!v.isDisabled}" maxlength="255"/>
+                </div>-->
+                 <div class="slds-form-element slds-size_1-of-2">
+                    <lightning:select aura:id="serverDebugLevelID" name="Server Debug Level" 
+									  label="Server Debug Level" disabled="{!v.isDisabled}" >
+                        <option value=""></option>
+                        <option value="FINEST">FINEST</option>
+                        <option value="FINER">FINER</option>
+                        <option value="FINE">FINE</option>
+                        <option value="DEBUG">DEBUG</option>
+                        <option value="INFO">INFO</option>
+                        <option value="WARN">WARN</option>
+                        <option value="ERROR">ERROR</option>
+                    </lightning:select>
+                </div>
+            </div>
+            <div class="slds-form-element__row">
+               
+                <div class="slds-form-element slds-size_1-of-2">
+                    <lightning:input aura:id="maxDurationID" type="number" 
+									 name="Max Duration Allowed In Minutes" label="Max Duration Allowed In Minutes" 
+									 disabled="{!v.isDisabled}" max="999" min="0" onblur="{!c.validateFieldA}"/>
+                </div>
+                <div class="slds-form-element slds-size_1-of-2">
+                <lightning:input aura:id="weeklyHrsID" type="number" name="Weekly Hours" 
+									 label="Weekly Hours" disabled="{!v.isDisabled}" max="999" min="0"
+									 onblur="{!c.validateFieldB}"/>
+                </div>
+            </div>
+            
+            <lightning:input aura:id="serverDebugID" type="checkbox" label="Server Debug" 
+									 name="Server Debug" disabled="{!v.isDisabled}" 
+									 checked="{!v.isServerDebug}" />
+            
+             <lightning:input aura:id="timeSpentROID" type="checkbox" label="TimeSpent ReadOnly" 
+									 name="Time Spent ReadOnly" disabled="{!v.isDisabled}" 
+									 checked="{!v.isTimeSpentRO}" />
+            
+            <lightning:input aura:id="clientFailID" type="checkbox" label="Client Failure Notifications" 
+								     name="Client Failure Notifications" disabled="{!v.isDisabled}" 
+									 checked="{!v.isClientFailNot}" />
+                
+            </div>
+        
+            <div class="slds-form-element__row">
+                <div class="form-footer">
+                    <div class="slds-grid slds-grid--vertical-align-end slds-grid--align-center">
+                        <lightning:button aura:id="editButtonID" variant="brand" label="Edit" 
+										  onclick="{! c.handleEdit }" disabled="{!v.editDisabled}"/>
+                        <lightning:button aura:id="saveButtonID" variant="brand" label="Save" 
+										  onclick="{! c.handleSave }" disabled="{!v.saveDisabled}"/>
+                        <lightning:button aura:id="cancelButtonID" variant="brand" label="Cancel" 
+										  onclick="{! c.handleCancel}" disabled="{!v.cancelDisabled}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--
+	<lightning:button variant="brand" label="New" onclick="{! c.handleClick }"/>
+	-->
+</aura:component>

@@ -1,0 +1,91 @@
+<apex:page showHeader="false" standardController="User" extensions="TimeTrackerDevPrechatContExt">
+
+<head>
+<script type="text/javascript">
+ //alert("username : " + window.opener.document.getElementById('j_id0:myForm:userName'));
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33370497-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<!-- This script takes the endpoint URL parameter passed from the deployment page and makes
+it the action for the form -->
+<script type="text/javascript">
+(function() { function handlePageLoad() {
+var endpointMatcher = new RegExp("[\\?\\&]endpoint=([^&#]*)");
+document.getElementById('prechatForm').setAttribute('action',
+decodeURIComponent(endpointMatcher.exec(document.location.search)[1]));
+} if (window.addEventListener) {
+window.addEventListener('load', handlePageLoad, false);
+} else { window.attachEvent('onload', handlePageLoad, false);
+}})();
+function validateForm()
+{
+        if (document.getElementById('prechat_field').value == ''  || document.getElementById('Email').value == '' || document.getElementById('comments').value == ''){
+            alert('Please fill in all the required information.');
+            return false;
+         }else{
+             return true;
+         }
+}
+</script>
+<apex:image id="theImage" value="{!$Resource.ComityLogo}" width="236" height="82"/>
+<h1>Hi, {!nameOfUser}</h1><br/><br/>
+<h1>Live Chat agents are available to assist you. Please provide the following information regarding your issue: </h1>
+<p />
+<form method='post' id='prechatForm' onsubmit='return validateForm()'>
+<table>
+    <tr><td>First and Last Name<font color="red">*</font>: </td><td><input type='text' size="40" name='liveagent.prechat:Name' id='prechat_field'/></td></tr>
+    <tr><td>Username (The same email address used to login to Greenway Customer Community):<font color="red">*</font>: </td><td><input type='text' size="40" name='liveagent.prechat:Email' id='Email'/></td></tr>
+ <!-- added Issue Category - Joe Bohon (11/1/12) -->
+    <tr><td>Issue Category (Select the best option from dropdown)<font color="red">*</font>: </td><td><select  name='liveagent.prechat:IssueCat' id='IssueCat'>
+<option value="Interface Issue">Interface Issue</option>
+<option value="RCM Issue">RCM Issue</option>
+<option value="CMS-1500 Issue">CMS-1500 Issue</option>
+<option value="EDI Registration">EDI Registration</option>
+<option value="Software How-to Question">Software How-to Question</option>
+<option value="Software Upgrade Question">Software Upgrade Question</option>
+<option value="Claim Rejection (EDI)">Claim Rejection (EDI)</option>
+<option value="ERA Check Requeue">ERA Check Requeue</option>
+<option value="Formatting Issue">Formatting Issue</option>
+<option value="Meaningful Use Related Issue">Meaningful Use Related Issue</option>
+<option value="ICD-10 Related Issue">ICD-10 Related Issue</option>
+<option value="5010 Related Issue">5010 Related Issue</option>
+<option value="Provider Registration Issue">Provider Registration Issue</option>
+<option value="Customer Community Issue">Customer Community Issue</option>
+<option value="Other - Not Listed">Other - Not Listed</option>
+</select>
+</td></tr>
+    <tr><td>Please tell us the<br/> issue you are experiencing. Let us know if you have an open Case number.<font color="red">*</font>: </td><td><textarea cols="40" rows="5" name='liveagent.prechat:Comments' id='comments'></textarea></td></tr>
+</table>
+<br/><br/><font color="red">*</font>Indicates a required field.  
+<!-- Creates an auto-query for a matching Contact record’s Email field based on the
+value of the liveagent.prechat:Email field -->
+<input type="hidden" name="liveagent.prechat.query:Email" value="Contact,Contact.Email"/>
+<input type="hidden" name="liveagent.prechat.save:Email" value="Email__c"/>
+<input type="hidden" name="liveagent.prechat.save:Comments" value="Comments__c"/>
+<input type="hidden" name="liveagent.prechat.save:IssueCat" value="IssueCat__c"/> 
+ <!-- added Customer Name capture - Joe Bohon (12/11/12) -->
+<input type="hidden" name="liveagent.prechat.save:Name" value="Customer_Name__c"/>
+
+<p />
+<input type='submit' value='Request Chat' id='prechat_submit'/>
+<style type="text/css">
+p {font-weight: bolder }
+</style>
+</form>
+<script>
+    //window.onload = function (){
+        document.getElementById('prechat_field').value = '{!nameOfUser}';
+        document.getElementById('Email').value = '{!emailOfUser}';
+    //}
+</script>
+</apex:page>

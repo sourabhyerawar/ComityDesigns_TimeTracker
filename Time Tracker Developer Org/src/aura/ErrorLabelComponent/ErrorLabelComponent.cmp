@@ -1,0 +1,23 @@
+<!--
+	@ Purpose : Displays the error message as toast message.
+	@ Name	  : ErrorLabelComponent.cmp
+-->
+
+<aura:component >
+    <aura:attribute name="errorMsg" type="String" />
+    <aura:method name="showError" action="{!c.showError}" access="PUBLIC"
+                 description="Method to show error toast"> 
+        <aura:attribute name="errorMsg" type="String" default="Error" /> 
+    </aura:method>
+    
+    <div class="slds-notify_container slds-hide" aura:id="containerID">
+        <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
+            <lightning:buttonIcon iconName="utility:close" variant="bare-inverse" class="slds-notify__close" 
+                                  onclick="{!c.closeLabel}"/>
+            <h2>
+                <lightning:icon iconName="utility:ban" size="small" />
+                {!v.errorMsg}
+            </h2>
+        </div>
+    </div>
+</aura:component>

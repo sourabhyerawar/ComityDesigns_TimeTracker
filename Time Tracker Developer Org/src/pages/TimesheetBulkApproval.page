@@ -1,0 +1,32 @@
+<!--
+    @ Purpose   : 1. Launches from List View button of Time sheet object --< 'Bulk Approve Timesheets'.
+                  2. Displays only submitted records from selected timesheet records.
+                  3. Provides mass approve or reject feature.
+    @ Page Name : TimesheetBulkApproval
+-->
+<apex:page standardController="Timesheet__c" extensions="TimeTrackerTimesheetListCtrlExt"
+           title="Timesheet Bulk Approval" showHeader="true" sidebar="true" recordSetVar="timesheets">
+    
+    <apex:form >
+    
+        <apex:pageBlock id="pgblktimesheets" title="Approve or Reject Timesheets">
+        <apex:pageMessages escape="false" rendered="true" ></apex:pageMessages>
+        
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton value="Approve" action="{! approveAll }"
+                                reRender="pgblktimesheets" disabled="{! areButtonsDisabled }" />
+            <apex:commandButton value="Reject" action="{! rejectAll }"
+                                reRender="pgblktimesheets" disabled="{! areButtonsDisabled }" />
+        </apex:pageBlockButtons>
+        
+        <apex:pageBlockTable value="{! listOfTimesheetsToUpdate }" var="timesheet">
+                <apex:column value="{! timesheet.Name }"/>
+                <apex:column value="{! timesheet.Status__c }"/>
+                <apex:column value="{! timesheet.Comment__c }"/>
+        </apex:pageBlockTable>
+        
+    </apex:pageBlock>
+   
+   </apex:form>
+   
+</apex:page>

@@ -1,0 +1,22 @@
+<apex:page standardcontroller="Case" extensions="CaseCommentExtension" showHeader="false">
+    <!-- Uses publisher.js rather than interaction.js -->
+    <apex:includeScript value="/canvas/sdk/js/28.0/publisher.js"/>
+    <div>
+        <apex:form >
+           <!-- Creates a case comment and on complete notifies the Case Feed page that a related list and the feed have been updated -->
+           <!-- Different oncomplete function using publisher.js -->
+           <apex:actionFunction action="{!addComment}" name="addComment" rerender="out,fields" 
+           oncomplete="Sfdc.canvas.publisher.publish({name : 'publisher.refresh',  payload : {feed: true, objectRelatedLists: {}}});"/> 
+           <apex:pageBlock id="fields">
+                <apex:pageBlockSection >
+                    <apex:inputField value="{!comment.IsPublished}" label="Public"/>
+                    <!--<apex:inputField value="{!caseRec.Time_Spent_Minutes__c}" required="true"/>-->
+                </apex:pageBlockSection>
+           </apex:pageBlock>
+           <apex:outputPanel id="out" >
+                <apex:inputField value="{!comment.commentbody}" style="width:98%;height:90px;" />
+           </apex:outputPanel> 
+        </apex:form><br/>
+        <button type="button" onclick="addComment();" style="position:fixed; bottom:0px; right:2px; padding: 5px 10px; font-size:13px;" id="cpbutton" >Post Case Comment</button>
+    </div>
+</apex:page>

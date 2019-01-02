@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Config Settings Table Configuration</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Config Settings Table Configuration</value>
+    </caseValues>
+    <fields>
+        <help><!-- API name of the field of Config Custom Settings. --></help>
+        <label><!-- API Name --></label>
+        <name>API_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Mark this if the field type is Checkbox. --></help>
+        <label><!-- Checkbox Field? --></label>
+        <name>Checkbox_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- Column Sequence Number --></help>
+        <label><!-- Column Number --></label>
+        <name>Column_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- State the purpose or description of the Column of Custom Settings Table. --></help>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Mark this if this needs to be displayed. --></help>
+        <label><!-- Display? --></label>
+        <name>Display__c</name>
+    </fields>
+    <fields>
+        <help><!-- Column Name of Custom Settings Table. --></help>
+        <label><!-- Label --></label>
+        <name>Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Custom Event</masterLabel>
+            <translation><!-- Custom Event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual</masterLabel>
+            <translation><!-- Manual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Object Settings</masterLabel>
+            <translation><!-- Object Settings --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Strategy</masterLabel>
+            <translation><!-- Strategy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>URLPattern</masterLabel>
+            <translation><!-- URLPattern --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Mark this field if it is used. --></help>
+        <label><!-- Used? --></label>
+        <name>Used__c</name>
+    </fields>
+    <fields>
+        <help><!-- The width of the Column in &quot;rem&quot;. --></help>
+        <label><!-- Width --></label>
+        <name>Width__c</name>
+    </fields>
+    <layouts>
+        <layout>Config Settings Table Configuration Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

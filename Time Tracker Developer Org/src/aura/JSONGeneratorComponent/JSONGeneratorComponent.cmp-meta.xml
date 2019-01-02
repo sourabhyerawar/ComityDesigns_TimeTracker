@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>38.0</apiVersion>
+    <description>Creates JSON from the field values input by user and sends it to form for entry of Manual Setting to be populated in code2 field</description>
+</AuraDefinitionBundle>

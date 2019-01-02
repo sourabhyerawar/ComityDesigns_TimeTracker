@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <auraComponent>AdminPageComponent</auraComponent>
+    <description>Page for Admins to customise the custom settings</description>
+    <label>Admin Custom Settings page</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom83: Pencil</motif>
+</CustomTab>

@@ -1,0 +1,26 @@
+.THIS.picklist {
+    width: 50px;
+}
+
+.THIS .sWrapTest {
+    height:100%;
+    width:100%;
+}
+
+.THIS.slds-spinner_container {  
+    z-index: 10000;
+    position: fixed;   
+}
+
+.THIS .inlineEditButtonBlock {
+    display : block;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.THIS .inlineEditSaveBtn {
+   /*
+   margin-left: -40% !important;
+   //*/    
+}

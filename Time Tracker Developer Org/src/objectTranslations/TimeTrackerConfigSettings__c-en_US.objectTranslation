@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Time Tracker Config Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Time Tracker Config Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Code 1 --></label>
+        <name>Code1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code 2 --></label>
+        <name>Code2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag 1 --></label>
+        <name>Flag1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag 2 --></label>
+        <name>Flag2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag 3 --></label>
+        <name>Flag3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag 4 --></label>
+        <name>Flag4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Flag 5 --></label>
+        <name>Flag5__c</name>
+    </fields>
+    <fields>
+        <label><!-- IsActive --></label>
+        <name>IsActive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text 1 --></label>
+        <name>Text1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text 2 --></label>
+        <name>Text2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text 3 --></label>
+        <name>Text3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text 4 --></label>
+        <name>Text4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text 5 --></label>
+        <name>Text5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text 6 --></label>
+        <name>Text6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text 7 --></label>
+        <name>Text7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Text 8 --></label>
+        <name>Text8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>
